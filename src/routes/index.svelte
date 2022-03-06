@@ -1,5 +1,15 @@
-<h1>Welcome to SvelteKit</h1>
-<p>
-  Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the
-  documentation
-</p>
+<script lang="ts">
+  import { shortUrls } from '$lib/short-urls'
+  const { redirects } = shortUrls
+</script>
+
+<h1>Short URLs with SvelteKit</h1>
+
+{#each redirects as redirect}
+  <p>Source: {redirect.source}</p>
+  <p>
+    Destination: <a href={redirect.destination}>
+      {redirect.destination}
+    </a>
+  </p>
+{/each}
