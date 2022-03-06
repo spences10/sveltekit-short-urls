@@ -6,12 +6,11 @@ export const shortUrls = {
     },
     {
       source: '/10facts',
-      destination: 'https://ten-facts.now.sh/',
+      destination: 'https://ten-facts.now.sh',
     },
     {
       source: '/wsl-2019',
-      destination:
-        'https://scottspence.com/2018/12/24/wsl-bootstrap-2019/',
+      destination: 'https://scottspence.com/posts/wsl-bootstrap-2019',
     },
     {
       source: '/cheat-sheets',
@@ -23,12 +22,11 @@ export const shortUrls = {
     },
     {
       source: '/jam-talk',
-      destination: 'https://spreading-the-jam-stack.now.sh/',
+      destination: 'https://spreading-the-jam-stack.now.sh',
     },
     {
       source: '/wsl',
-      destination:
-        'https://scottspence.com/2018/12/24/wsl-bootstrap-2019/',
+      destination: 'https://scottspence.com/posts/wsl-bootstrap-2019',
     },
     { source: '/faq', destination: 'https://scottspence.com/faq' },
     {
@@ -101,16 +99,15 @@ export const shortUrls = {
     },
     {
       source: '/bab-guide',
-      destination:
-        'https://scottspence.com/2019/10/31/build-an-mdx-blog',
+      destination: 'https://scottspence.com/posts/build-an-mdx-blog',
     },
     {
       source: '/gatsbyeatsapis',
-      destination: 'https://gatsby-eats-apis.spences10.now.sh/',
+      destination: 'https://gatsby-eats-apis.spences10.now.sh',
     },
     {
       source: '/GatsbyEatsAPIs',
-      destination: 'https://gatsby-eats-apis.spences10.now.sh/',
+      destination: 'https://gatsby-eats-apis.spences10.now.sh',
     },
     {
       source: '/gatsby-data-fetching',
@@ -127,11 +124,11 @@ export const shortUrls = {
       destination:
         'https://gatsby-build-and-run-time-data-fetching.spences10.now.sh ',
     },
-    { source: '/cfromp', destination: 'https://cfromp.xyz/' },
+    { source: '/cfromp', destination: 'https://cfromp.xyz' },
     {
       source: '/shorturls',
       destination:
-        'https://scottspence.com/2020/04/19/url-shortener-with-nowsh',
+        'https://scottspence.com/posts/url-shortener-with-nowsh',
     },
     {
       source: '/talks',
@@ -143,12 +140,12 @@ export const shortUrls = {
     },
     {
       source: '/mdsds',
-      destination: 'https://markdown-showdown.vercel.app/',
+      destination: 'https://markdown-showdown.vercel.app',
     },
     {
       source: '/mdsd',
       destination:
-        'https://scottspence.com/2020/09/17/writing-with-markdown/',
+        'https://scottspence.com/posts/writing-with-markdown',
     },
     {
       source: '/dc',
@@ -164,7 +161,7 @@ export const shortUrls = {
     },
     {
       source: '/sb',
-      destination: 'https://dendron.vercel.app/',
+      destination: 'https://dendron.vercel.app',
     },
     {
       source: '/skatcl',
