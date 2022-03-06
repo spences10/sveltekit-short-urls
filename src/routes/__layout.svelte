@@ -1,4 +1,4 @@
-<script context="module">
+<script lang="ts" context="module">
   import { shortUrls } from '$lib/short-urls'
 
   export const load = async ({ url }) => {
@@ -7,11 +7,14 @@
     let [redirect] = redirects.filter(
       item => item.source === url.pathname
     )
-    if (!redirect) redirect = { destination: `/` }
 
-    return {
-      status: 301,
-      redirect: redirect.destination,
-    }
+    if (redirect) {
+      return {
+        status: 301,
+        redirect: redirect.destination,
+      }
+    } else return {}
   }
 </script>
+
+<slot />
