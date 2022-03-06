@@ -5,6 +5,38 @@ export const shortUrls = {
       destination: 'https://scottspence.com',
     },
     {
+      source: '/twitter',
+      destination: 'https://twitter.com/spences10',
+    },
+    {
+      source: '/git',
+      destination: 'https://github.com/spences10',
+    },
+    {
+      source: '/github',
+      destination: 'https://github.com/spences10',
+    },
+    {
+      source: '/yt',
+      destination: 'https://www.youtube.com/scottspenceplease',
+    },
+    {
+      source: '/youtube',
+      destination: 'https://www.youtube.com/scottspenceplease',
+    },
+    {
+      source: '/twitch',
+      destination: 'https://www.twitch.tv/spences10',
+    },
+    {
+      source: '/spotify',
+      destination: 'https://open.spotify.com/user/spences10',
+    },
+    {
+      source: '/li',
+      destination: 'https://www.linkedin.com/in/spences10',
+    },
+    {
       source: '/10facts',
       destination: 'https://ten-facts.now.sh',
     },
@@ -64,38 +96,6 @@ export const shortUrls = {
     {
       source: '/dium',
       destination: 'https://medium.com/@spences10',
-    },
-    {
-      source: '/li',
-      destination: 'https://www.linkedin.com/in/spences10',
-    },
-    {
-      source: '/git',
-      destination: 'https://github.com/spences10',
-    },
-    {
-      source: '/github',
-      destination: 'https://github.com/spences10',
-    },
-    {
-      source: '/yt',
-      destination: 'https://www.youtube.com/scottspenceplease',
-    },
-    {
-      source: '/youtube',
-      destination: 'https://www.youtube.com/scottspenceplease',
-    },
-    {
-      source: '/twitter',
-      destination: 'https://twitter.com/spences10',
-    },
-    {
-      source: '/twitch',
-      destination: 'https://www.twitch.tv/spences10',
-    },
-    {
-      source: '/spotify',
-      destination: 'https://open.spotify.com/user/spences10',
     },
     {
       source: '/bab-guide',
