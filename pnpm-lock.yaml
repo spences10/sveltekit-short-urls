@@ -4,6 +4,7 @@ specifiers:
   '@playwright/test': ^1.19.2
   '@sveltejs/adapter-vercel': ^1.0.0-next.46
   '@sveltejs/kit': next
+  '@tailwindcss/typography': ^0.5.2
   '@typescript-eslint/eslint-plugin': ^5.13.0
   '@typescript-eslint/parser': ^5.13.0
   autoprefixer: ^10.4.2
@@ -26,6 +27,7 @@ devDependencies:
   '@playwright/test': 1.19.2
   '@sveltejs/adapter-vercel': 1.0.0-next.46
   '@sveltejs/kit': 1.0.0-next.294_svelte@3.46.4
+  '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.23
   '@typescript-eslint/eslint-plugin': 5.13.0_33fffc354ccfa91fbe7d1677b9395a0a
   '@typescript-eslint/parser': 5.13.0_eslint@8.10.0+typescript@4.6.2
   autoprefixer: 10.4.2_postcss@8.4.7
@@ -756,6 +758,17 @@ packages:
       vite: 2.8.6
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@tailwindcss/typography/0.5.2_tailwindcss@3.0.23:
+    resolution: {integrity: sha512-coq8DBABRPFcVhVIk6IbKyyHUt7YTEC/C992tatFB+yEx5WGBQrCgsSFjxHUr8AWXphWckadVJbominEduYBqw==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1 || insiders'
+    dependencies:
+      lodash.castarray: 4.4.0
+      lodash.isplainobject: 4.0.6
+      lodash.merge: 4.6.2
+      tailwindcss: 3.0.23_autoprefixer@10.4.2
     dev: true
 
   /@types/istanbul-lib-coverage/2.0.4:
@@ -2181,6 +2194,14 @@ packages:
     dependencies:
       p-locate: 3.0.0
       path-exists: 3.0.0
+    dev: true
+
+  /lodash.castarray/4.4.0:
+    resolution: {integrity: sha1-wCUTUV4wna3dTCTGDP3c9ZdtkRU=}
+    dev: true
+
+  /lodash.isplainobject/4.0.6:
+    resolution: {integrity: sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=}
     dev: true
 
   /lodash.merge/4.6.2:
