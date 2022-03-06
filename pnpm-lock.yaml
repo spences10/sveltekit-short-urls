@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@playwright/test': ^1.19.2
-  '@sveltejs/adapter-auto': next
+  '@sveltejs/adapter-vercel': ^1.0.0-next.46
   '@sveltejs/kit': next
   '@typescript-eslint/eslint-plugin': ^5.13.0
   '@typescript-eslint/parser': ^5.13.0
@@ -19,7 +19,7 @@ specifiers:
 
 devDependencies:
   '@playwright/test': 1.19.2
-  '@sveltejs/adapter-auto': 1.0.0-next.31
+  '@sveltejs/adapter-vercel': 1.0.0-next.46
   '@sveltejs/kit': 1.0.0-next.294_svelte@3.46.4
   '@typescript-eslint/eslint-plugin': 5.13.0_33fffc354ccfa91fbe7d1677b9395a0a
   '@typescript-eslint/parser': 5.13.0_eslint@8.10.0+typescript@4.6.2
@@ -612,10 +612,6 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@iarna/toml/2.2.5:
-    resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
-    dev: true
-
   /@jest/types/27.5.1:
     resolution: {integrity: sha512-Cx46iJ9QpwQTjIdq5VJu2QTMMs3QlEjI0x1QbBP5W1+nMzyc2XmimiRR/CbX9TO0cPTeUlxWMOu8mslYsJ8DEw==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
@@ -703,28 +699,6 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.1
-    dev: true
-
-  /@sveltejs/adapter-auto/1.0.0-next.31:
-    resolution: {integrity: sha512-N1ZFGxulcSAOJrtdFR567diwbWKUvLrHZiUE9TiEvIahnndeRa50MF9LDg/CuIvpa6fHqz5K827XXrADlPAr9g==}
-    dependencies:
-      '@sveltejs/adapter-cloudflare': 1.0.0-next.15
-      '@sveltejs/adapter-netlify': 1.0.0-next.50
-      '@sveltejs/adapter-vercel': 1.0.0-next.46
-    dev: true
-
-  /@sveltejs/adapter-cloudflare/1.0.0-next.15:
-    resolution: {integrity: sha512-kq3vNFpKmRVgAOfz4HrcleBnUADs++dfVF8S61EAFqNTEvGtOVdJKLql66Pe/uxlY0VxAp1dplxtEDf4/R70lQ==}
-    dependencies:
-      esbuild: 0.14.25
-    dev: true
-
-  /@sveltejs/adapter-netlify/1.0.0-next.50:
-    resolution: {integrity: sha512-lpHvjcHiC77SPyLp7OjhenJF9KYfKsXlmUua7icNh0Hc8SKtRQf0dn+a1Zy77AslikvOX7/4HZE8zPIyIvYYqw==}
-    dependencies:
-      '@iarna/toml': 2.2.5
-      esbuild: 0.14.25
-      tiny-glob: 0.2.9
     dev: true
 
   /@sveltejs/adapter-vercel/1.0.0-next.46:
@@ -1798,10 +1772,6 @@ packages:
       type-fest: 0.20.2
     dev: true
 
-  /globalyzer/0.1.0:
-    resolution: {integrity: sha512-40oNTM9UfG6aBmuKxk/giHn5nQ8RVz/SS4Ir6zgzOv9/qC3kKZ9v4etGTcJbEl/NyVQH7FGU7d+X1egr57Md2Q==}
-    dev: true
-
   /globby/11.1.0:
     resolution: {integrity: sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g==}
     engines: {node: '>=10'}
@@ -1812,10 +1782,6 @@ packages:
       ignore: 5.2.0
       merge2: 1.4.1
       slash: 3.0.0
-    dev: true
-
-  /globrex/0.1.2:
-    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: true
 
   /graceful-fs/4.2.9:
@@ -2702,13 +2668,6 @@ packages:
 
   /text-table/0.2.0:
     resolution: {integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=}
-    dev: true
-
-  /tiny-glob/0.2.9:
-    resolution: {integrity: sha512-g/55ssRPUjShh+xkfx9UPDXqhckHEsHr4Vd9zX55oSdGZc/MD0m3sferOkwWtp98bv+kcVfEHtRJgBVJzelrzg==}
-    dependencies:
-      globalyzer: 0.1.0
-      globrex: 0.1.2
     dev: true
 
   /to-fast-properties/2.0.0:
