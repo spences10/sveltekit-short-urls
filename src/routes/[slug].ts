@@ -12,5 +12,10 @@ export const get = async ({ url }) => {
       headers: { Location: redirect.destination },
       status: 301,
     }
+  } else if (!redirect && url.pathname.length > 1) {
+    return {
+      headers: { Location: '/' },
+      status: 301,
+    }
   } else return {}
 }
