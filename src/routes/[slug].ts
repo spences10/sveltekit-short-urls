@@ -1,6 +1,7 @@
 import { shortUrls } from '$lib/short-urls'
+import type { RequestHandler } from '@sveltejs/kit'
 
-export const get = async ({ url }) => {
+export const get: RequestHandler = async ({ url }) => {
   const { redirects } = shortUrls
 
   const [redirect] = redirects.filter(
@@ -10,12 +11,12 @@ export const get = async ({ url }) => {
   if (redirect) {
     return {
       headers: { Location: redirect.destination },
-      status: 301,
+      status: 302,
     }
   } else if (!redirect && url.pathname.length > 1) {
     return {
       headers: { Location: '/' },
-      status: 301,
+      status: 302,
     }
   } else return {}
 }
