@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@playwright/test': 1.19.2
-  '@sveltejs/adapter-vercel': 1.0.0-next.46
+  '@sveltejs/adapter-vercel': 1.0.0-next.47
   '@sveltejs/kit': next
   '@tailwindcss/typography': 0.5.2
   '@typescript-eslint/eslint-plugin': 5.15.0
@@ -25,8 +25,8 @@ specifiers:
 
 devDependencies:
   '@playwright/test': 1.19.2
-  '@sveltejs/adapter-vercel': 1.0.0-next.46
-  '@sveltejs/kit': 1.0.0-next.296_svelte@3.46.4
+  '@sveltejs/adapter-vercel': 1.0.0-next.47
+  '@sveltejs/kit': 1.0.0-next.298_svelte@3.46.4
   '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.23
   '@typescript-eslint/eslint-plugin': 5.15.0_f2c49ce7d0e93ebcfdb4b7d25b131b28
   '@typescript-eslint/parser': 5.15.0_eslint@8.11.0+typescript@4.6.2
@@ -713,14 +713,14 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@sveltejs/adapter-vercel/1.0.0-next.46:
-    resolution: {integrity: sha512-6Rwf3kZF6uX2JxDMoYgZWZe5TjVTTWZa57VukdNGjnlAT3CrfsEOBWyskX/8hx7AiYX5fucZaAtYPNZpUmueIA==}
+  /@sveltejs/adapter-vercel/1.0.0-next.47:
+    resolution: {integrity: sha512-VV3vP8KqL9XOc7xfQLVhXTM5jrTme+r1qJy98u5/dhAhkdjqrGDwAKo/s7MoB3rTYxLb2b8I4QxAaoz2Y2aIBg==}
     dependencies:
       esbuild: 0.14.25
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.296_svelte@3.46.4:
-    resolution: {integrity: sha512-mZM3vYSg1VPpgL2QHa+My+KviOuSgP4e5JRO9/T/5XLe3o2tsrRnSpjuzZeVdcY3B4+OrUb5JV7B1UPkHISrLA==}
+  /@sveltejs/kit/1.0.0-next.298_svelte@3.46.4:
+    resolution: {integrity: sha512-HUna2KgBc9NdeSCAqZBo6NUuRHab1tRMW6O3OtLvPs7ldSY+cEarDmUJb1ZeHwPrbcS2RTHSnBNNc0l+UyiFIw==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:
