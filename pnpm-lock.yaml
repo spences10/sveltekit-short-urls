@@ -17,7 +17,7 @@ specifiers:
   prettier: 2.6.2
   prettier-plugin-svelte: 2.6.0
   svelte: 3.46.6
-  svelte-check: 2.4.6
+  svelte-check: 2.5.0
   svelte-preprocess: 4.10.5
   tailwindcss: 3.0.23
   tslib: 2.3.1
@@ -26,7 +26,7 @@ specifiers:
 devDependencies:
   '@playwright/test': 1.20.2
   '@sveltejs/adapter-vercel': 1.0.0-next.47
-  '@sveltejs/kit': 1.0.0-next.305_svelte@3.46.6
+  '@sveltejs/kit': 1.0.0-next.308_svelte@3.46.6
   '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.23
   '@typescript-eslint/eslint-plugin': 5.18.0_a07dca3bdfc4bfa60f4dda0c1f9e3287
   '@typescript-eslint/parser': 5.18.0_eslint@8.12.0+typescript@4.6.3
@@ -40,7 +40,7 @@ devDependencies:
   prettier: 2.6.2
   prettier-plugin-svelte: 2.6.0_prettier@2.6.2+svelte@3.46.6
   svelte: 3.46.6
-  svelte-check: 2.4.6_0a0033d5867bac6f6a8828d3bfcd02f8
+  svelte-check: 2.5.0_0a0033d5867bac6f6a8828d3bfcd02f8
   svelte-preprocess: 4.10.5_3ce0e22b85336b1a63f5104127fe70c5
   tailwindcss: 3.0.23_autoprefixer@10.4.4
   tslib: 2.3.1
@@ -691,8 +691,8 @@ packages:
       esbuild: 0.14.25
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.305_svelte@3.46.6:
-    resolution: {integrity: sha512-xnykqWuN/9pRQOG8M+qnqbOyM/UK6UnnrdWIy82DkQ+ZO0jKA+puM7V6r0jso2vQr8n7LGSabgwioeJ/EINKpg==}
+  /@sveltejs/kit/1.0.0-next.308_svelte@3.46.6:
+    resolution: {integrity: sha512-/ORLef5kZEMTUgUkdSQ5Lsn3IKBRNYmLdJ26JjtSa03nPKsybvSMiGIho9WS6ESBw3+XaYF91TqksTyr/gTeoA==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:
@@ -2944,8 +2944,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-check/2.4.6_0a0033d5867bac6f6a8828d3bfcd02f8:
-    resolution: {integrity: sha512-luzdly7RJhyXucQe8ID/7CqDgXdMrPYXmyZBjCbp+cixzTopZotuWevrB5hWDOnOU19m2cyetigIIa7WDHnCmQ==}
+  /svelte-check/2.5.0_0a0033d5867bac6f6a8828d3bfcd02f8:
+    resolution: {integrity: sha512-/laO032JQ1TpmYHgaaLndHNPeWW3VSL3liMB97sA9fYTEzlIy3jIo4Rgr7EzjNvieiNWG73C5voOAeNHlrwbpg==}
     hasBin: true
     peerDependencies:
       svelte: ^3.24.0
@@ -2953,7 +2953,6 @@ packages:
       chokidar: 3.5.3
       fast-glob: 3.2.11
       import-fresh: 3.3.0
-      minimist: 1.2.5
       picocolors: 1.0.0
       sade: 1.8.1
       source-map: 0.7.3
