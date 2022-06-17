@@ -29,7 +29,11 @@
     <!-- rows -->
     {#each redirects as redirect}
       <tr class="hover">
-        <td class="text-xl text-secondary">{redirect.source}</td>
+        <td class="text-xl">
+          <a class='text-secondary' href={redirect.source}>
+            {redirect.source}
+          </a>
+        </td>
         <td class="text-xl">
           <a
             class="link text-primary"
