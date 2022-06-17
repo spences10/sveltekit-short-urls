@@ -168,5 +168,10 @@ export const shortUrls = {
       destination:
         'https://sveltekit-and-the-content-layer.vercel.app/1',
     },
+    {
+      source: '/bwskagql',
+      destination:
+        'https://building-with-sveltekit-and-graphql-slides.vercel.app/1',
+    },
   ],
 }
