@@ -1,7 +1,7 @@
 export const shortUrls = {
   redirects: [
     {
-      source: '/me',
+      source: '/',
       destination: 'https://scottspence.com',
     },
     {
@@ -172,6 +172,10 @@ export const shortUrls = {
       source: '/bwskagql',
       destination:
         'https://building-with-sveltekit-and-graphql-slides.vercel.app/1',
+    },
+    {
+      source: '/links',
+      destination: '/links',
     },
   ],
 }
