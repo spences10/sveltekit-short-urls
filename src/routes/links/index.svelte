@@ -30,7 +30,7 @@
     {#each redirects as redirect}
       <tr class="hover">
         <td class="text-xl">
-          <a class='text-secondary' href={redirect.source}>
+          <a class="text-secondary" href={redirect.source}>
             {redirect.source}
           </a>
         </td>

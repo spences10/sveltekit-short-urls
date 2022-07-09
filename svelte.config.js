@@ -14,16 +14,6 @@ const config = {
 
   kit: {
     adapter: adapter(),
-    vite: {
-      resolve: {
-        alias: {
-          $components: path.resolve('./src/lib/components'),
-          $lib: path.resolve('./src/lib'),
-          '$lib/*': path.resolve('./src/lib/*'),
-          $stores: path.resolve('./src/stores'),
-        },
-      },
-    },
   },
 }
 
