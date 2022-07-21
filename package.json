@@ -1,5 +1,5 @@
 {
-  "name": "with-ts",
+  "name": "sveltekit-short-urls",
   "version": "0.0.1",
   "scripts": {
     "dev": "env-cmd vite dev",
