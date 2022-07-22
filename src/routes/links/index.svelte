@@ -1,6 +1,8 @@
 <script lang="ts">
   import { shortUrls } from '$lib/short-urls'
   const { redirects } = shortUrls
+
+  export let records: any[] = []
 </script>
 
 <h1>Short URLs with SvelteKit</h1>
@@ -27,24 +29,26 @@
   </thead>
   <tbody>
     <!-- rows -->
-    {#each redirects as redirect}
-      <tr class="hover">
-        <td class="text-xl">
-          <a class="text-secondary" href={redirect.source}>
-            {redirect.source}
-          </a>
-        </td>
-        <td class="text-xl">
-          <a
-            class="link text-primary"
-            href={redirect.destination}
-            target="_blank"
-            rel="noopener"
-          >
-            {redirect.destination}
-          </a>
-        </td>
-      </tr>
+    {#each records as { fields: { destination, source, visible } }}
+      {#if visible}
+        <tr class="hover">
+          <td class="text-xl">
+            <a class="text-secondary" href={source}>
+              {source}
+            </a>
+          </td>
+          <td class="text-xl">
+            <a
+              class="link text-primary"
+              href={destination}
+              target="_blank"
+              rel="noopener"
+            >
+              {destination}
+            </a>
+          </td>
+        </tr>
+      {/if}
     {/each}
   </tbody>
 </table>
