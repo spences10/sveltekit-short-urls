@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { shortUrls } from '$lib/short-urls'
-  const { redirects } = shortUrls
-
   export let records: any[] = []
 </script>
+
+<pre>{JSON.stringify(records, null, 2)}</pre>
 
 <h1>Short URLs with SvelteKit</h1>
 
@@ -30,6 +29,7 @@
   <tbody>
     <!-- rows -->
     {#each records as { fields: { destination, source, visible } }}
+      {visible}
       {#if visible}
         <tr class="hover">
           <td class="text-xl">
