@@ -2,8 +2,6 @@
   export let records: any[] = []
 </script>
 
-<pre>{JSON.stringify(records, null, 2)}</pre>
-
 <h1>Short URLs with SvelteKit</h1>
 
 <p>
