@@ -9,9 +9,10 @@ export const GET = async () => {
         'Content-Type': 'application/json',
       },
     })
+    const { records } = await res.json()
     return {
       status: 200,
-      body: await res.json(),
+      body: { records },
     }
   } catch (error) {
     return {
