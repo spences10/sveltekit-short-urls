@@ -27,7 +27,6 @@
   <tbody>
     <!-- rows -->
     {#each records as { fields: { destination, source, visible } }}
-      {visible}
       {#if visible}
         <tr class="hover">
           <td class="text-xl">
