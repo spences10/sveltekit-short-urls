@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@playwright/test": "1.24.1",
-    "@sveltejs/adapter-vercel": "1.0.0-next.65",
+    "@sveltejs/adapter-vercel": "1.0.0-next.66",
     "@sveltejs/kit": "next",
     "@tailwindcss/typography": "0.5.4",
     "@typescript-eslint/eslint-plugin": "5.31.0",
