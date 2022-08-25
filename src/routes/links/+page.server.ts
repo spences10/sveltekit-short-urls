@@ -1,6 +1,6 @@
-import { AIRTABLE_BASE_ID, AIRTABLE_TOKEN } from '$lib/env-vars'
+import { AIRTABLE_BASE_ID, AIRTABLE_TOKEN } from '$env/static/private'
 
-export const GET = async () => {
+export const load = async () => {
   const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/links-list`
   try {
     const res = await fetch(AIRTABLE_URL, {
@@ -10,16 +10,11 @@ export const GET = async () => {
       },
     })
     const { records } = await res.json()
-    return {
-      status: 200,
-      body: { records },
-    }
+    return { records }
   } catch (error) {
     return {
       status: 500,
-      body: {
-        error: 'Big oof! Sorry',
-      },
+      error: 'Big oof! Sorry',
     }
   }
 }
