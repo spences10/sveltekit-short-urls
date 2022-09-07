@@ -21,7 +21,7 @@
     "@typescript-eslint/eslint-plugin": "5.36.1",
     "@typescript-eslint/parser": "5.36.1",
     "autoprefixer": "10.4.8",
-    "daisyui": "2.24.0",
+    "daisyui": "2.25.0",
     "env-cmd": "10.1.0",
     "eslint": "8.23.0",
     "eslint-config-prettier": "8.5.0",
