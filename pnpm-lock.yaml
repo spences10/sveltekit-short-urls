@@ -16,7 +16,7 @@ specifiers:
   postcss: 8.4.16
   postcss-load-config: 4.0.1
   prettier: 2.7.1
-  prettier-plugin-svelte: 2.7.0
+  prettier-plugin-svelte: 2.7.1
   svelte: 3.50.1
   svelte-check: 2.9.0
   svelte-preprocess: 4.10.7
@@ -28,7 +28,7 @@ specifiers:
 devDependencies:
   '@playwright/test': 1.26.0
   '@sveltejs/adapter-vercel': 1.0.0-next.77
-  '@sveltejs/kit': 1.0.0-next.502_svelte@3.50.1+vite@3.1.3
+  '@sveltejs/kit': 1.0.0-next.504_svelte@3.50.1+vite@3.1.3
   '@tailwindcss/typography': 0.5.7_tailwindcss@3.1.8
   '@typescript-eslint/eslint-plugin': 5.38.0_4gkcvl6qsi23tqqawfqgcwtp54
   '@typescript-eslint/parser': 5.38.0_7ilbxdl5iguzcjriqqcg2m5cku
@@ -41,7 +41,7 @@ devDependencies:
   postcss: 8.4.16
   postcss-load-config: 4.0.1_postcss@8.4.16
   prettier: 2.7.1
-  prettier-plugin-svelte: 2.7.0_nk6d2fkgcllkkdynqbuearcure
+  prettier-plugin-svelte: 2.7.1_nk6d2fkgcllkkdynqbuearcure
   svelte: 3.50.1
   svelte-check: 2.9.0_zy537mcxrfn3wq4nghluxnsi5a
   svelte-preprocess: 4.10.7_sxt3mkf5m54vn3maobdwhqzitu
@@ -208,8 +208,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.502_svelte@3.50.1+vite@3.1.3:
-    resolution: {integrity: sha512-S2MLydojG1G9mQXcM0cAY6CyYtPQ3QeiTTxQe/TQbV1r1zTYwqRea9DVeRJd3EECWvWM46BnW/6yEAs9N5GvXg==}
+  /@sveltejs/kit/1.0.0-next.504_svelte@3.50.1+vite@3.1.3:
+    resolution: {integrity: sha512-KrhlSHT3aCVnhRgUoN6aGIjIw3nWEdNwfoZcE1x65F5D7Ju/K9D8dQwyal9v0aBAZyN9nFuXxsYGaMLE9sppfw==}
     engines: {node: '>=16.14'}
     hasBin: true
     requiresBuild: true
@@ -2124,8 +2124,8 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier-plugin-svelte/2.7.0_nk6d2fkgcllkkdynqbuearcure:
-    resolution: {integrity: sha512-fQhhZICprZot2IqEyoiUYLTRdumULGRvw0o4dzl5jt0jfzVWdGqeYW27QTWAeXhoupEZJULmNoH3ueJwUWFLIA==}
+  /prettier-plugin-svelte/2.7.1_nk6d2fkgcllkkdynqbuearcure:
+    resolution: {integrity: sha512-H33qjhCBZyd9Zr1A5hUAYDh7j0Mf97uvy7XcA7CP4nNSYrNcPvBUf7wI8K9NptWTIs0S41QtgTWmJIUiGlEBtw==}
     peerDependencies:
       prettier: ^1.16.4 || ^2.0.0
       svelte: ^3.2.0
