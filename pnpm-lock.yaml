@@ -8,7 +8,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': 5.41.0
   '@typescript-eslint/parser': 5.41.0
   autoprefixer: 10.4.13
-  daisyui: 2.33.0
+  daisyui: 2.36.1
   env-cmd: 10.1.0
   eslint: 8.26.0
   eslint-config-prettier: 8.5.0
@@ -33,7 +33,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.41.0_huremdigmcnkianavgfk3x6iou
   '@typescript-eslint/parser': 5.41.0_wyqvi574yv7oiwfeinomdzmc3m
   autoprefixer: 10.4.13_postcss@8.4.18
-  daisyui: 2.33.0_lycaqaeny3mp632atgvyvqdgwe
+  daisyui: 2.36.1_lycaqaeny3mp632atgvyvqdgwe
   env-cmd: 10.1.0
   eslint: 8.26.0
   eslint-config-prettier: 8.5.0_eslint@8.26.0
@@ -199,7 +199,7 @@ packages:
       cookie: 0.5.0
       devalue: 4.0.0
       kleur: 4.1.5
-      magic-string: 0.26.3
+      magic-string: 0.26.7
       mime: 3.0.0
       sade: 1.8.1
       set-cookie-parser: 2.5.1
@@ -705,8 +705,8 @@ packages:
     hasBin: true
     dev: true
 
-  /daisyui/2.33.0_lycaqaeny3mp632atgvyvqdgwe:
-    resolution: {integrity: sha512-NviwGs9oC9NW7IEZiLexHtxkpzP38AKxb9GTUCqUa0qoU8NHKQGqJUzQWZwWSZakU57KsQLblFVe0xMhqw4TlA==}
+  /daisyui/2.36.1_lycaqaeny3mp632atgvyvqdgwe:
+    resolution: {integrity: sha512-l43iibOsfYAYfRMIsCfobSk4ygV2/OiQMX98zLFrafWt5zoSed7I4b4tRlKeP6xhnfVe6Xkv/84nFfapHI0B2A==}
     peerDependencies:
       autoprefixer: ^10.0.2
       postcss: ^8.1.6
@@ -1538,13 +1538,6 @@ packages:
 
   /magic-string/0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
-    dependencies:
-      sourcemap-codec: 1.4.8
-    dev: true
-
-  /magic-string/0.26.3:
-    resolution: {integrity: sha512-u1Po0NDyFcwdg2nzHT88wSK0+Rih0N1M+Ph1Sp08k8yvFFU3KR72wryS7e1qMPJypt99WB7fIFVCA92mQrMjrg==}
-    engines: {node: '>=12'}
     dependencies:
       sourcemap-codec: 1.4.8
     dev: true
