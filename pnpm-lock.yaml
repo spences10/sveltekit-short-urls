@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@playwright/test': 1.28.0
+  '@playwright/test': 1.28.1
   '@sveltejs/adapter-vercel': 1.0.0-next.84
   '@sveltejs/kit': next
   '@tailwindcss/typography': 0.5.8
@@ -26,7 +26,7 @@ specifiers:
   vite: 3.2.4
 
 devDependencies:
-  '@playwright/test': 1.28.0
+  '@playwright/test': 1.28.1
   '@sveltejs/adapter-vercel': 1.0.0-next.84
   '@sveltejs/kit': 1.0.0-next.560_svelte@3.53.1+vite@3.2.4
   '@tailwindcss/typography': 0.5.8_tailwindcss@3.2.4
@@ -162,13 +162,13 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@playwright/test/1.28.0:
-    resolution: {integrity: sha512-vrHs5DFTPwYox5SGKq/7TDn/S4q6RA1zArd7uhO6EyP9hj3XgZBBM12ktMbnDQNxh/fL1IUKsTNLxihmsU38lQ==}
+  /@playwright/test/1.28.1:
+    resolution: {integrity: sha512-xN6spdqrNlwSn9KabIhqfZR7IWjPpFK1835tFNgjrlysaSezuX8PYUwaz38V/yI8TJLG9PkAMEXoHRXYXlpTPQ==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 18.7.14
-      playwright-core: 1.28.0
+      playwright-core: 1.28.1
     dev: true
 
   /@polka/url/1.0.0-next.21:
@@ -1782,8 +1782,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /playwright-core/1.28.0:
-    resolution: {integrity: sha512-nJLknd28kPBiCNTbqpu6Wmkrh63OEqJSFw9xOfL9qxfNwody7h6/L3O2dZoWQ6Oxcm0VOHjWmGiCUGkc0X3VZA==}
+  /playwright-core/1.28.1:
+    resolution: {integrity: sha512-3PixLnGPno0E8rSBJjtwqTwJe3Yw72QwBBBxNoukIj3lEeBNXwbNiKrNuB1oyQgTBw5QHUhNO3SteEtHaMK6ag==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
