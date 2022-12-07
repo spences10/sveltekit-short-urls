@@ -3,15 +3,7 @@ import { resolve } from 'path'
 
 /** @type {import('vite').UserConfig} */
 const config = {
-  plugins: [sveltekit()],
-  resolve: {
-    alias: {
-      $components: resolve('./src/lib/components'),
-      $lib: resolve('./src/lib'),
-      '$lib/*': resolve('./src/lib/*'),
-      $stores: resolve('./src/stores'),
-    },
-  },
+	plugins: [sveltekit()]
 }
 
 export default config

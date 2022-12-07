@@ -1,13 +1,13 @@
 {
-  "git.enableSmartCommit": true,
-  "git.postCommitCommand": "sync",
-  "css.validate": false,
-  "cSpell.words": [
-    "sveltejs",
-    "tbody",
-    "thead",
-    "vars",
-    "vercel",
-    "vite"
-  ]
+	"git.enableSmartCommit": true,
+	"git.postCommitCommand": "sync",
+	"css.validate": false,
+	"cSpell.words": [
+		"sveltejs",
+		"tbody",
+		"thead",
+		"vars",
+		"vercel",
+		"vite"
+	]
 }
