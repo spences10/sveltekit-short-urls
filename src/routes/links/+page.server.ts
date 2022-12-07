@@ -1,6 +1,7 @@
 import { AIRTABLE_BASE_ID, AIRTABLE_TOKEN } from '$env/static/private'
+import type { PageServerLoad } from './$types'
 
-export const load = async () => {
+export const load: PageServerLoad = async () => {
 	const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/links-list`
 	try {
 		const res = await fetch(AIRTABLE_URL, {

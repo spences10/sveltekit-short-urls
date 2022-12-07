@@ -13,7 +13,8 @@ export const GET: RequestHandler = async ({ url }) => {
 	const { records } = await res.json()
 
 	const [redirect] = records.filter(
-		(item) => item.fields.source === url.pathname
+		(item: { fields: { source: string } }) =>
+			item.fields.source === url.pathname
 	)
 
 	if (redirect) {
