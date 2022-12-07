@@ -9,5 +9,6 @@
 		"vars",
 		"vercel",
 		"vite"
-	]
+	],
+	"tailwindCSS.validate": false
 }
