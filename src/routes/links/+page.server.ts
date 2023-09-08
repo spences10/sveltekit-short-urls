@@ -16,6 +16,7 @@ export const load = async () => {
 					position: data?.position,
 					description: data?.description,
 					clicks: data?.clicks,
+					visible: data?.visible,
 				}
 			})
 		)

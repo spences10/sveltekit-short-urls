@@ -22,7 +22,7 @@
 <ul>
 	{#if records}
 		{#each records as record}
-			{#if record && record.description && record.source && record.destination}
+			{#if record && record.description && record.source && record.destination && record.visible}
 				<li
 					class="prose prose-xl bg-secondary/10 rounded-md p-4 my-4 border border-primary"
 				>

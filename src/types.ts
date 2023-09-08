@@ -3,4 +3,5 @@ declare interface RedirectData {
 	clicks?: string
 	position?: string
 	description?: string
+	visible?: boolean
 }
