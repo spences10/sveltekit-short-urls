@@ -4,6 +4,9 @@
 	"css.validate": false,
 	"cSpell.words": [
 		"daisyui",
+		"hgetall",
+		"hincrby",
+		"hmset",
 		"sveltejs",
 		"tbody",
 		"thead",

@@ -20,33 +20,34 @@
 </article>
 
 <ul>
-	{#each records as { fields: { description, source, destination, visible } }}
-		{#if visible}
-			<li
-				class="prose prose-xl bg-secondary/10 rounded-md p-4 my-4 border border-primary"
-			>
-				<p>
-					Description:
-					{description}
-				</p>
-				<p>
-					Source:
-					<a class="text-secondary" href={source}>
-						{source}
-					</a>
-				</p>
-				<p>
-					Destination:
-					<a
-						class="link text-primary"
-						href={destination}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						{destination}
-					</a>
-				</p>
-			</li>
-		{/if}
-	{/each}
+	{#if records}
+		{#each records as record}
+			{#if record && record.description && record.source && record.destination && record.visible}
+				<li
+					class="prose prose-xl bg-secondary/10 rounded-md p-4 my-4 border border-primary"
+				>
+					<p>Description: {record.description}</p>
+					<p>
+						Source:
+						<a class="text-secondary" href={record.source}>
+							{record.source}
+						</a>
+					</p>
+					<p>
+						Destination:
+						<a
+							class="link text-primary"
+							href={record.destination}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{record.destination}
+						</a>
+					</p>
+				</li>
+			{/if}
+		{/each}
+	{:else}
+		<p>No records available.</p>
+	{/if}
 </ul>

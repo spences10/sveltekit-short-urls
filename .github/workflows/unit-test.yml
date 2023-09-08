@@ -32,7 +32,7 @@ jobs:
       - name: Build
         run: pnpm run build
         env:
-          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
-          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          UPSTASH_REDIS_REST_URL : ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN : ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
       - name: Test
         run: pnpm run test:ci
