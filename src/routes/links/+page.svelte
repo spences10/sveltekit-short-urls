@@ -1,6 +1,22 @@
 <script lang="ts">
 	export let data
 	let { records } = data
+
+	let sort_order: 'asc' | 'desc' = 'desc'
+
+	const toggle_sort_order = () => {
+		sort_order = sort_order === 'asc' ? 'desc' : 'asc'
+	}
+
+	$: sorted_records = records
+		? [...records].sort((a, b) => {
+				const clicks_a = parseInt(a.clicks || '0', 10)
+				const clicks_b = parseInt(b.clicks || '0', 10)
+				return sort_order === 'asc'
+					? clicks_a - clicks_b
+					: clicks_b - clicks_a
+		  })
+		: []
 </script>
 
 <article class="prose prose-xl mb-10">
@@ -17,16 +33,34 @@
 	</p>
 
 	<p>Or, seeing as you're here you can just click the link! 😂</p>
+
+	<button on:click={toggle_sort_order} class="btn btn-primary">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke-width="1.5"
+			stroke="currentColor"
+			class="w-6 h-6"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"
+			/>
+		</svg>
+	</button>
 </article>
 
 <ul>
-	{#if records}
-		{#each records as record}
+	{#if sorted_records}
+		{#each sorted_records as record}
 			{#if record && record.description && record.source && record.destination && record.visible}
 				<li
 					class="prose prose-xl bg-secondary/10 rounded-md p-4 my-4 border border-primary"
 				>
 					<p>Description: {record.description}</p>
+					<p>Clicks: {record.clicks}</p>
 					<p>
 						Source:
 						<a class="text-secondary" href={record.source}>
