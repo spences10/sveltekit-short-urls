@@ -11,30 +11,30 @@ Uses Upstash Redis for storing links and details
 Enter:
 
 ```bash
-hmset short_url:<key> destination "<destination>" description "<description>"
+HMSET short_url:<key> destination "<destination>" description "<description>" visible "true | false"
 ```
 
 **Updating a Field in Hash**: To update a specific field, type:
 
 ```bash
-hset short_url:<key> <field> "<new_value>"
+HSET short_url:<key> <field> "<new_value>"
 ```
 
 **Deleting a Hash**: To delete a hash, enter:
 
 ```bash
-del short_url:<key>
+DEL short_url:<key>
 ```
 
 **Viewing All Keys**: To see all keys, you'd type:
 
 ```bash
-keys *
+KEYS *
 ```
 
 **Viewing a Hash**: To get all fields and values of a specific hash,
 type:
 
 ```bash
-hgetall short_url:<key>
+HGETALL short_url:<key>
 ```
