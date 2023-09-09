@@ -11,13 +11,14 @@ Uses Upstash Redis for storing links and details
 Enter:
 
 ```bash
-HMSET short_url:<key> destination "<destination>" description "<description>" visible "true | false"
+HSET short_url:<key> destination "<destination>" description "<description>" visible "true | false"
 ```
 
-**Updating a Field in Hash**: To update a specific field, type:
+**Updating a Field in Hash**: To update a specific field,
+type:
 
 ```bash
-HSET short_url:<key> <field> "<new_value>"
+HSET short_url:<key> <field1> "<new_value1>" <field2> "<new_value2>"
 ```
 
 **Deleting a Hash**: To delete a hash, enter:
