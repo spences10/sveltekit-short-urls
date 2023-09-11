@@ -1,5 +1,10 @@
 import { redis, short_url_key } from '$lib/redis'
+import type { ServerlessConfig } from '@sveltejs/adapter-vercel'
 import type { RequestEvent } from './$types'
+
+export const config: ServerlessConfig = {
+	runtime: 'nodejs18.x',
+}
 
 export const GET = async ({ url }: RequestEvent) => {
 	const key = `${short_url_key()}${url.pathname.substring(1)}`
