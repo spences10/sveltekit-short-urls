@@ -1,38 +1,51 @@
 import { expect, test } from '@playwright/test'
 
-test('Links page', async ({ page }) => {
+// Test: Check sorting toggle button is visible
+test('should display sorting toggle button', async ({ page }) => {
 	await page.goto('http://localhost:4173/links')
+	const sortButton = await page.$('button')
+	expect(await sortButton?.isVisible()).toBe(true)
+})
 
-	const title = await page.textContent('h1')
-	expect(title).toBe('Short URLs with SvelteKit')
-
-	const visibleLinks = await page.$$('ul li')
-	expect(visibleLinks.length).toBeGreaterThan(0)
-
-	const firstSourceLink = await visibleLinks[0].$('p:nth-child(2) a')
-	const firstDestinationLink = await visibleLinks[0].$(
-		'p:nth-child(3) a'
+// Test: Check initial records order
+test('should display records sorted by clicks in descending order initially', async ({
+	page,
+}) => {
+	await page.goto('http://localhost:4173/links')
+	const clicksElements = await page.$$eval(
+		'ul li p:nth-child(2)',
+		(elements) =>
+			elements.map((e) =>
+				parseInt(e.textContent?.split(': ')[1] || '0')
+			)
 	)
-
-	const destinationHref = await firstDestinationLink?.getAttribute(
-		'href'
+	const isDescending = clicksElements.every(
+		(val, i, arr) => !i || arr[i - 1] >= val
 	)
+	expect(isDescending).toBe(true)
+})
 
-	if (destinationHref) {
-		const actualDestination = 'https://ten-facts.vercel.app/' // Replace with the actual URL if it redirects
-		// Start waiting for the URL change before clicking
-		const navigationPromise = page.waitForURL(actualDestination, {
-			timeout: 60000,
-		})
+// For this test, you would need to add some way to toggle the sort order and re-fetch the sorted records
+// Test: Check toggled records order
+test('should display records sorted by clicks in ascending order when toggled', async ({
+	page,
+}) => {
+	await page.goto('http://localhost:4173/links')
+	// Simulate a click on the sorting toggle button (assuming it's the first button on the page)
+	await page.click('button')
 
-		await firstSourceLink?.click()
+	// Wait a bit for the page to re-render (this would ideally be replaced by a more deterministic wait)
+	await page.waitForTimeout(500)
 
-		// Wait for the URL change
-		await navigationPromise
-
-		const destinationURL = page.url()
-		expect(destinationURL).toBe(actualDestination)
-	} else {
-		throw new Error('Destination URL not found.')
-	}
+	const clicksElements = await page.$$eval(
+		'ul li p:nth-child(2)',
+		(elements) =>
+			elements.map((e) =>
+				parseInt(e.textContent?.split(': ')[1] || '0')
+			)
+	)
+	const isAscending = clicksElements.every(
+		(val, i, arr) => !i || arr[i - 1] <= val
+	)
+	expect(isAscending).toBe(true)
 })

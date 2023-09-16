@@ -32,7 +32,10 @@ jobs:
       - name: Build
         run: pnpm run build
         env:
+          # prettier-ignore
           UPSTASH_REDIS_REST_URL : ${{ secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_REST_TOKEN : ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          PUBLIC_FATHOM_URL: ${{ secrets.PUBLIC_FATHOM_URL }}
+          PUBLIC_FATHOM_ID: ${{ secrets.PUBLIC_FATHOM_ID }}
       - name: Test
         run: pnpm run test:ci
