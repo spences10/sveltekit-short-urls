@@ -10,6 +10,7 @@ vi.mock('@sveltejs/kit', () => ({
 describe('Page Load', () => {
 	it('should redirect to "https://scottspence.com" if pathname is "/"', async () => {
 		// Access the mocked redirect function and type it correctly
+    // @ts-ignore
 		const mocked_redirect = kit.redirect as unknown as vi.Mock
 
 		// Reset the mock to clear any previous calls
@@ -27,6 +28,7 @@ describe('Page Load', () => {
 
 	it.skip('should not redirect if pathname is not "/"', async () => {
 		// Access the mocked redirect function and ensure it's correctly typed as a mock
+    // @ts-ignore
 		const mocked_redirect = kit.redirect as unknown as vi.Mock
 		mocked_redirect.mockReset()
 
