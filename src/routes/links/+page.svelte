@@ -1,22 +1,22 @@
 <script lang="ts">
-	export let data
-	let { records } = data
+	export let data;
+	let { records } = data;
 
-	let sort_order: 'asc' | 'desc' = 'desc'
+	let sort_order: 'asc' | 'desc' = 'desc';
 
 	const toggle_sort_order = () => {
-		sort_order = sort_order === 'asc' ? 'desc' : 'asc'
-	}
+		sort_order = sort_order === 'asc' ? 'desc' : 'asc';
+	};
 
 	$: sorted_records = records
 		? [...records].sort((a, b) => {
-				const clicks_a = parseInt(a.clicks || '0', 10)
-				const clicks_b = parseInt(b.clicks || '0', 10)
+				const clicks_a = parseInt(a.clicks || '0', 10);
+				const clicks_b = parseInt(b.clicks || '0', 10);
 				return sort_order === 'asc'
 					? clicks_a - clicks_b
-					: clicks_b - clicks_a
-		  })
-		: []
+					: clicks_b - clicks_a;
+			})
+		: [];
 </script>
 
 <article class="prose prose-xl mb-10">
@@ -41,7 +41,7 @@
 			viewBox="0 0 24 24"
 			stroke-width="1.5"
 			stroke="currentColor"
-			class="w-6 h-6"
+			class="h-6 w-6"
 		>
 			<path
 				stroke-linecap="round"
@@ -57,7 +57,7 @@
 		{#each sorted_records as record}
 			{#if record && record.description && record.source && record.destination && record.visible}
 				<li
-					class="prose prose-xl bg-secondary/10 rounded-md p-4 my-4 border border-primary"
+					class="prose prose-xl my-4 rounded-md border border-primary bg-secondary/10 p-4"
 				>
 					<p>Description: {record.description}</p>
 					<p>Clicks: {record.clicks}</p>

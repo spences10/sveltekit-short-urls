@@ -1,7 +1,7 @@
 declare interface RedirectData {
-	destination?: string
-	clicks?: string
-	position?: string
-	description?: string
-	visible?: boolean
+	destination?: string;
+	clicks?: string;
+	position?: string;
+	description?: string;
+	visible?: boolean;
 }
