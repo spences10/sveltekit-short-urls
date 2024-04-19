@@ -1,22 +1,22 @@
 <script lang="ts">
-	export let data;
+	let { data } = $props();
 	let { records } = data;
-
-	let sort_order: 'asc' | 'desc' = 'desc';
+	let sort_order: 'asc' | 'desc' = $state('desc');
 
 	const toggle_sort_order = () => {
 		sort_order = sort_order === 'asc' ? 'desc' : 'asc';
 	};
 
-	$: sorted_records = records
-		? [...records].sort((a, b) => {
-				const clicks_a = parseInt(a.clicks || '0', 10);
-				const clicks_b = parseInt(b.clicks || '0', 10);
-				return sort_order === 'asc'
-					? clicks_a - clicks_b
-					: clicks_b - clicks_a;
-			})
-		: [];
+	let sorted_records = $derived.by(() => {
+		if (!records) return [];
+		return [...records].sort((a, b) => {
+			const clicks_a = a.clicks;
+			const clicks_b = b.clicks;
+			return sort_order === 'asc'
+				? Number(clicks_a ?? 0) - Number(clicks_b ?? 0)
+				: Number(clicks_b ?? 0) - Number(clicks_a ?? 0);
+		});
+	});
 </script>
 
 <article class="prose prose-xl mb-10">
@@ -34,7 +34,7 @@
 
 	<p>Or, seeing as you're here you can just click the link! 😂</p>
 
-	<button on:click={toggle_sort_order} class="btn btn-primary">
+	<button onclick={toggle_sort_order} class="btn btn-primary">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			fill="none"
@@ -53,7 +53,7 @@
 </article>
 
 <ul>
-	{#if sorted_records}
+	{#if sorted_records.length > 0}
 		{#each sorted_records as record}
 			{#if record && record.description && record.source && record.destination && record.visible}
 				<li
@@ -63,7 +63,7 @@
 					<p>Clicks: {record.clicks}</p>
 					<p>
 						Source:
-						<a class="text-secondary" href={record.source}>
+						<a class="text-secondary" href={record.source.toString()}>
 							{record.source}
 						</a>
 					</p>
@@ -71,11 +71,11 @@
 						Destination:
 						<a
 							class="link text-primary"
-							href={record.destination}
+							href={record.destination.toString()}
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							{record.destination}
+							{record.destination.toString()}
 						</a>
 					</p>
 				</li>

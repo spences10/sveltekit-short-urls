@@ -4,15 +4,12 @@
 	"css.validate": false,
 	"cSpell.words": [
 		"daisyui",
-		"hgetall",
-		"hincrby",
-		"hmset",
-		"hset",
+		"pcss",
 		"sveltejs",
 		"tbody",
 		"thead",
+		"TURSO",
 		"vars",
-		"vercel",
 		"vite"
 	],
 	"tailwindCSS.validate": false
