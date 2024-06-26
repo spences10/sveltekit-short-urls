@@ -28,7 +28,7 @@ devDependencies:
     version: 7.7.1(eslint@9.5.0)(typescript@5.4.5)
   '@upstash/redis':
     specifier: ^1.29.0
-    version: 1.31.5
+    version: 1.31.6
   autoprefixer:
     specifier: ^10.4.19
     version: 10.4.19(postcss@8.4.38)
@@ -831,8 +831,8 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@upstash/redis@1.31.5:
-    resolution: {integrity: sha512-2MatqeqftroSJ9Q+pqbyGAIwXX6KEPtUTUna2c/fq09h12ffwvltDTgfppeF+NzJo/SyZfHY8e1RoflduMbz1A==}
+  /@upstash/redis@1.31.6:
+    resolution: {integrity: sha512-7sDQQqvVnnV+2PUVGjocITa34CULGLoWhmfSY/LtpxNYv24EsgOk9VXhmGXIyzJBcXxB614wOF6ccEN0Lr7fqQ==}
     dependencies:
       crypto-js: 4.2.0
     dev: true
