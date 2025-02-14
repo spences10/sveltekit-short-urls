@@ -34,6 +34,7 @@
 
 	<p>Or, seeing as you're here you can just click the link! 😂</p>
 
+	<!-- svelte-ignore a11y_consider_explicit_label -->
 	<button onclick={toggle_sort_order} class="btn btn-primary">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

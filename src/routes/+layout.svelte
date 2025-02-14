@@ -1,7 +1,7 @@
 <script lang="ts">
 	let { children } = $props();
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import {
 		PUBLIC_FATHOM_ID,
 		PUBLIC_FATHOM_URL,
@@ -19,7 +19,7 @@
 
 	// Track pageview on route change
 	$effect(() => {
-		$page.url.pathname, browser && Fathom.trackPageview();
+		page.url.pathname, browser && Fathom.trackPageview();
 	});
 </script>
 
