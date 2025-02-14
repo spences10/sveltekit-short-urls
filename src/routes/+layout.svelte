@@ -7,7 +7,7 @@
 		PUBLIC_FATHOM_URL,
 	} from '$env/static/public';
 	import * as Fathom from 'fathom-client';
-	import '../app.pcss';
+	import '../app.css';
 
 	$effect(() => {
 		if (browser) {

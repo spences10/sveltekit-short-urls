@@ -57,7 +57,7 @@
 		{#each sorted_records as record}
 			{#if record && record.description && record.source && record.destination && record.visible}
 				<li
-					class="prose prose-xl my-4 rounded-md border border-primary bg-secondary/10 p-4"
+					class="prose prose-xl border-primary bg-secondary/10 my-4 rounded-md border p-4"
 				>
 					<p>Description: {record.description}</p>
 					<p>Clicks: {record.clicks}</p>
