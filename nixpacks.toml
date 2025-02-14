@@ -1,0 +1,17 @@
+[phases.setup]
+nixPkgs = ['nodejs_20', 'pnpm-9_x']
+
+[phases.install]
+cmds = ['pnpm i --frozen-lockfile']
+
+[phases.build]
+cmds = ['pnpm run build']
+
+[start]
+cmd = 'node build/index.js'
+
+[healthcheck]
+cmd = 'curl -f http://localhost:3001/health'
+interval = '10s'
+timeout = '5s'
+retries = 3
