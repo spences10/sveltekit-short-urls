@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from 'vitest';
 import * as kit from '@sveltejs/kit';
+import { describe, expect, it, vi } from 'vitest';
 import { load } from './+page';
 
 // Mock the redirect function using vi.fn() for correct typing
@@ -22,7 +22,7 @@ describe('Page Load', () => {
 		// Check if redirect was called correctly
 		expect(mocked_redirect).toHaveBeenCalledWith(
 			302,
-			'https://scottspence.com'
+			'https://scottspence.com',
 		);
 	});
 

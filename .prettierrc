@@ -1,8 +1,9 @@
 {
 	"useTabs": true,
 	"singleQuote": true,
-	"trailingComma": "es5",
+	"trailingComma": "all",
 	"printWidth": 70,
+	"proseWrap": "always",
 	"plugins": [
 		"prettier-plugin-svelte",
 		"prettier-plugin-tailwindcss"
