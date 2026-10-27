@@ -1,7 +1,48 @@
 @import 'tailwindcss';
 
-/* Plugin configurations */
-@plugin "@tailwindcss/typography";
-@plugin "daisyui" {
-	themes: all;
+:root {
+	--paper: #eef1f5;
+	--ink: #16213b;
+	--slate: #5a6477;
+	--tally: #d3dcf5;
+	--rule: #d5dbe5;
+	--cobalt: #2747d0;
+	color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--paper: #0f1626;
+		--ink: #e6eaf2;
+		--slate: #8b95a8;
+		--tally: #1c2a4c;
+		--rule: #24304a;
+		--cobalt: #8ea6ff;
+		color-scheme: dark;
+	}
+}
+
+:root[data-theme='dark'] {
+	--paper: #0f1626;
+	--ink: #e6eaf2;
+	--slate: #8b95a8;
+	--tally: #1c2a4c;
+	--rule: #24304a;
+	--cobalt: #8ea6ff;
+	color-scheme: dark;
+}
+
+body {
+	background: var(--paper);
+	color: var(--ink);
+	font-family: 'Recursive Variable', system-ui, sans-serif;
+	font-variation-settings:
+		'CASL' 0,
+		'MONO' 0;
+	-webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+	outline: 2px solid var(--cobalt);
+	outline-offset: 3px;
 }

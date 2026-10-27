@@ -1,88 +1,480 @@
 <script lang="ts">
-	let { data } = $props();
-	let records = $derived(data.records);
-	let sort_order: 'asc' | 'desc' = $state('desc');
+	import { number_crunch } from '#lib/number-crunch.js';
+	import { page } from '$app/state';
 
-	const toggle_sort_order = () => {
-		sort_order = sort_order === 'asc' ? 'desc' : 'asc';
+	let { data } = $props();
+
+	type Sort = 'clicks' | 'name';
+
+	let sort: Sort = $state('clicks');
+	let query = $state('');
+	let copied: string | null = $state(null);
+	let copied_timer: ReturnType<typeof setTimeout> | undefined;
+
+	const number = new Intl.NumberFormat('en-GB');
+
+	let records = $derived(data.records ?? []);
+	let most_clicks = $derived(
+		Math.max(1, ...records.map((record) => record.clicks)),
+	);
+	let total_clicks = $derived(
+		records.reduce((sum, record) => sum + record.clicks, 0),
+	);
+
+	let shown = $derived.by(() => {
+		const needle = query.trim().toLowerCase();
+		const matches = needle
+			? records.filter((record) =>
+					[record.source, record.description, record.destination]
+						.join(' ')
+						.toLowerCase()
+						.includes(needle),
+				)
+			: records;
+		return [...matches].sort((a, b) =>
+			sort === 'clicks'
+				? b.clicks - a.clicks || a.source.localeCompare(b.source)
+				: a.source.localeCompare(b.source),
+		);
+	});
+
+	const where = (destination: string) => {
+		try {
+			const url = new URL(destination);
+			const path = url.pathname === '/' ? '' : url.pathname;
+			return `${url.host.replace(/^www\./, '')}${path}`;
+		} catch {
+			return destination;
+		}
 	};
 
-	let sorted_records = $derived.by(() => {
-		if (!records) return [];
-		return [...records].sort((a, b) => {
-			const clicks_a = a.clicks;
-			const clicks_b = b.clicks;
-			return sort_order === 'asc'
-				? Number(clicks_a ?? 0) - Number(clicks_b ?? 0)
-				: Number(clicks_b ?? 0) - Number(clicks_a ?? 0);
-		});
-	});
+	const copy = async (source: string) => {
+		await navigator.clipboard.writeText(
+			`${page.url.origin}/${source}`,
+		);
+		copied = source;
+		clearTimeout(copied_timer);
+		copied_timer = setTimeout(() => (copied = null), 1600);
+	};
 </script>
 
-<article class="prose prose-xl mb-10">
-	<h1>Short URLs with SvelteKit</h1>
+<svelte:head>
+	<title>{page.url.hostname} links</title>
+	<meta
+		name="description"
+		content="Short links for Scott Spence's talks, videos and profiles."
+	/>
+</svelte:head>
 
-	<p>
-		This is my short links page, each Source (or <code>pathname</code
-		>) here redirects to destination.
-	</p>
+<main class="directory">
+	<header class="row masthead">
+		<h1 class="domain">{page.url.hostname}</h1>
+		<span class="axis" aria-hidden="true">/</span>
+	</header>
 
-	<p>
-		So if you want to check out <code>/me</code> then enter the URL
-		for this site with <code>/me</code> at the end of the URL to be redirected.
-	</p>
-
-	<p>Or, seeing as you're here you can just click the link! 😂</p>
-
-	<!-- svelte-ignore a11y_consider_explicit_label -->
-	<button onclick={toggle_sort_order} class="btn btn-primary">
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			fill="none"
-			viewBox="0 0 24 24"
-			stroke-width="1.5"
-			stroke="currentColor"
-			class="h-6 w-6"
-		>
-			<path
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"
-			/>
-		</svg>
-	</button>
-</article>
-
-<ul>
-	{#if sorted_records.length > 0}
-		{#each sorted_records as record}
-			{#if record && record.description && record.source && record.destination && record.visible}
-				<li
-					class="my-4 prose prose-xl rounded-md border border-primary bg-secondary/10 p-4"
+	<div class="row controls">
+		<p class="intro">
+			Short links to my talks, videos and profiles. Add a path to the
+			domain, or pick one here.
+		</p>
+		<div class="tools">
+			<label class="filter">
+				<span class="visually-hidden">Filter links</span>
+				<input
+					type="search"
+					placeholder="Filter links"
+					bind:value={query}
+					autocomplete="off"
+					spellcheck="false"
+				/>
+			</label>
+			<div class="sort" role="group" aria-label="Sort links">
+				<button
+					type="button"
+					aria-pressed={sort === 'clicks'}
+					onclick={() => (sort = 'clicks')}>Most clicked</button
 				>
-					<p>Description: {record.description}</p>
-					<p>Clicks: {record.clicks}</p>
-					<p>
-						Source:
-						<a class="text-secondary" href={record.source.toString()}>
-							{record.source}
+				<button
+					type="button"
+					aria-pressed={sort === 'name'}
+					onclick={() => (sort = 'name')}>A to Z</button
+				>
+			</div>
+		</div>
+	</div>
+
+	{#if shown.length > 0}
+		<ul class="links">
+			{#each shown as record (record.id)}
+				<li
+					class="row link"
+					style:--share={record.clicks / most_clicks}
+				>
+					<span
+						class="clicks"
+						data-clicks={record.clicks}
+						title="{number.format(record.clicks)} clicks"
+					>
+						{number_crunch(record.clicks)}
+						<span class="visually-hidden">clicks</span>
+					</span>
+					<div class="body">
+						<a class="source" href="/{record.source}">
+							<span aria-hidden="true">/</span>{record.source}
 						</a>
-					</p>
-					<p>
-						Destination:
-						<a
-							class="link text-primary"
-							href={record.destination.toString()}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							{record.destination.toString()}
-						</a>
-					</p>
+						<p class="detail">
+							{#if record.description}
+								<span class="description">{record.description}</span>
+							{/if}
+							<span class="where">{where(record.destination)}</span>
+						</p>
+					</div>
+					<button
+						type="button"
+						class="copy"
+						onclick={() => copy(record.source)}
+						aria-label="Copy {page.url.hostname}/{record.source}"
+					>
+						{copied === record.source ? 'Copied' : 'Copy'}
+					</button>
 				</li>
-			{/if}
-		{/each}
+			{/each}
+		</ul>
+	{:else if records.length > 0}
+		<p class="row empty">
+			<span></span>
+			<span>No links match “{query.trim()}”.</span>
+		</p>
 	{:else}
-		<p>No records available.</p>
+		<p class="row empty">
+			<span></span>
+			<span>No links yet. Add one with the ingest API.</span>
+		</p>
 	{/if}
-</ul>
+
+	<footer class="row note">
+		<span class="clicks" title="{number.format(total_clicks)} clicks">
+			{number_crunch(total_clicks)}
+		</span>
+		<p>
+			clicks on these links. Counts before 27 October 2026 include
+			bots and link previews; since then only people are counted.
+		</p>
+	</footer>
+
+	<p class="visually-hidden" aria-live="polite">
+		{copied ? `Copied ${page.url.hostname}/${copied}` : ''}
+	</p>
+</main>
+
+<style>
+	.directory {
+		--gap: clamp(1rem, 3vw, 2rem);
+		display: grid;
+		grid-template-columns: max-content minmax(0, 1fr) max-content;
+		column-gap: var(--gap);
+		max-width: 64rem;
+		margin-inline: auto;
+		padding: clamp(2.5rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem) 4rem;
+	}
+
+	.row {
+		display: grid;
+		grid-column: 1 / -1;
+		grid-template-columns: subgrid;
+	}
+
+	.masthead {
+		align-items: baseline;
+		font-variation-settings:
+			'CASL' 1,
+			'MONO' 0;
+		font-size: clamp(2.25rem, 7vw, 4.5rem);
+		font-weight: 800;
+		line-height: 1;
+		letter-spacing: -0.02em;
+	}
+
+	.domain {
+		grid-column: 1;
+		justify-self: end;
+		font: inherit;
+		margin: 0;
+	}
+
+	/* The slash is the axis every source hangs from. */
+	.axis {
+		grid-column: 2;
+		margin-left: calc(var(--gap) * -1);
+		color: var(--cobalt);
+	}
+
+	.controls {
+		margin-top: 1.5rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.intro {
+		grid-column: 2 / -1;
+		max-width: 36rem;
+		margin: 0;
+		color: var(--slate);
+		font-size: 1.0625rem;
+		line-height: 1.55;
+	}
+
+	.tools {
+		grid-column: 2 / -1;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 1.25rem;
+	}
+
+	.filter {
+		flex: 1 1 14rem;
+		max-width: 22rem;
+	}
+
+	input {
+		width: 100%;
+		padding: 0.55rem 0.8rem;
+		border: 1px solid var(--rule);
+		border-radius: 0.5rem;
+		background: transparent;
+		color: inherit;
+		font: inherit;
+	}
+
+	input::placeholder {
+		color: var(--slate);
+	}
+
+	.sort {
+		display: inline-flex;
+		border: 1px solid var(--rule);
+		border-radius: 0.5rem;
+		padding: 0.2rem;
+	}
+
+	.sort button {
+		padding: 0.35rem 0.8rem;
+		border-radius: 0.35rem;
+		color: var(--slate);
+		font-weight: 500;
+		cursor: pointer;
+	}
+
+	.sort button[aria-pressed='true'] {
+		background: var(--ink);
+		color: var(--paper);
+	}
+
+	.links {
+		display: grid;
+		grid-column: 1 / -1;
+		grid-template-columns: subgrid;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.link {
+		position: relative;
+		align-items: center;
+		padding-block: 0.85rem;
+		border-top: 1px solid var(--rule);
+	}
+
+	/* Tally: runs from the axis, sized by share of the top link. */
+	.link::before {
+		content: '';
+		position: absolute;
+		bottom: -1px;
+		left: 0;
+		height: 3px;
+		width: calc(var(--share) * 100%);
+		background: var(--cobalt);
+		grid-column: 2 / -1;
+	}
+
+	.clicks {
+		grid-column: 1;
+		justify-self: end;
+		color: var(--slate);
+		font-variant-numeric: tabular-nums;
+		font-size: 0.9375rem;
+	}
+
+	.body {
+		grid-column: 2;
+		min-width: 0;
+	}
+
+	.source {
+		display: inline-block;
+		color: var(--ink);
+		font-variation-settings:
+			'CASL' 1,
+			'MONO' 0;
+		font-size: clamp(1.375rem, 3vw, 1.75rem);
+		font-weight: 750;
+		line-height: 1.15;
+		letter-spacing: -0.01em;
+		text-decoration: none;
+		margin-left: -0.55em;
+	}
+
+	.source span {
+		color: var(--cobalt);
+	}
+
+	.source:hover {
+		color: var(--cobalt);
+	}
+
+	.detail {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 0.75rem;
+		margin: 0.2rem 0 0;
+		font-size: 0.9375rem;
+		color: var(--slate);
+	}
+
+	.description {
+		color: var(--ink);
+	}
+
+	.where {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		max-width: 100%;
+	}
+
+	.copy {
+		grid-column: 3;
+		padding: 0.35rem 0.75rem;
+		border: 1px solid var(--rule);
+		border-radius: 0.5rem;
+		background: var(--paper);
+		color: var(--slate);
+		font-size: 0.875rem;
+		cursor: pointer;
+		min-width: 5.5rem;
+	}
+
+	.copy:hover {
+		color: var(--ink);
+		border-color: var(--slate);
+	}
+
+	.empty {
+		margin: 0;
+		padding-block: 1rem;
+		border-top: 1px solid var(--rule);
+		color: var(--slate);
+	}
+
+	.empty span:last-child {
+		grid-column: 2 / -1;
+	}
+
+	.note {
+		align-items: baseline;
+		margin-top: 0;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--rule);
+		color: var(--slate);
+		font-size: 0.875rem;
+	}
+
+	.note .clicks {
+		color: var(--ink);
+		font-weight: 650;
+	}
+
+	.note p {
+		grid-column: 2 / -1;
+		max-width: 36rem;
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	@media (max-width: 40rem) {
+		.directory {
+			grid-template-columns: minmax(0, 1fr) max-content;
+		}
+
+		.masthead {
+			display: flex;
+			font-size: clamp(2rem, 11vw, 2.75rem);
+		}
+
+		.axis {
+			margin: 0;
+		}
+
+		.link::before {
+			grid-column: 1 / -1;
+		}
+
+		.intro,
+		.tools,
+		.note p,
+		.empty span:last-child {
+			grid-column: 1 / -1;
+		}
+
+		.link {
+			grid-template-areas:
+				'body copy'
+				'clicks copy';
+		}
+
+		.body {
+			grid-area: body;
+		}
+
+		.clicks {
+			grid-area: clicks;
+			justify-self: start;
+			margin-top: 0.15rem;
+			font-size: 0.875rem;
+		}
+
+		.copy {
+			grid-area: copy;
+		}
+
+		.source {
+			margin-left: 0;
+		}
+
+		.note {
+			display: block;
+		}
+
+		.note .clicks {
+			display: inline;
+		}
+
+		.note p {
+			display: inline;
+		}
+
+		.empty span:first-child {
+			display: none;
+		}
+	}
+</style>

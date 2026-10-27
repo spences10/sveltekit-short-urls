@@ -1,8 +1,11 @@
 import { expect, test } from '@playwright/test';
 
-test('index page has expected h1', async ({ page }) => {
+test('links page shows the domain as its heading', async ({
+	page,
+}) => {
 	await page.goto('/links');
+	const { hostname } = new URL(page.url());
 	await expect(
-		page.getByRole('heading', { name: 'Short URLs with SvelteKit' }),
+		page.getByRole('heading', { level: 1, name: hostname }),
 	).toBeVisible();
 });

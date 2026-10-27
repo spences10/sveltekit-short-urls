@@ -4,6 +4,7 @@
 		PUBLIC_FATHOM_URL,
 	} from '$app/env/public';
 	import { afterNavigate } from '$app/navigation';
+	import '@fontsource-variable/recursive/full.css';
 	import * as Fathom from 'fathom-client';
 	import { onMount, type Snippet } from 'svelte';
 	import '../app.css';
@@ -24,6 +25,4 @@
 	});
 </script>
 
-<main class="container mx-auto max-w-3xl px-4">
-	{@render children()}
-</main>
+{@render children()}
