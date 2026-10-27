@@ -14,6 +14,11 @@ export const variables = defineEnvVars({
 		description:
 			'Path to the SQLite database, defaults to ./data/short-urls.db',
 	},
+	INGEST_TOKEN: {
+		...private_runtime,
+		description:
+			'Bearer token for POST /api/ingest; at least 32 characters. Unset disables the endpoint.',
+	},
 	ANALYTICS_SALT: {
 		...private_runtime,
 		description:
