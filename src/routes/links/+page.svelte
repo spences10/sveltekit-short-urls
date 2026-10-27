@@ -53,10 +53,25 @@
 
 <main class="directory">
 	<header>
-		<h1>{page.url.hostname}<span class="slash">/</span></h1>
+		<div class="sign">
+			<h1>{page.url.hostname}</h1>
+			<p class="sign-sub">Talks, videos and profiles</p>
+			<svg
+				class="arrow"
+				viewBox="0 0 48 48"
+				aria-hidden="true"
+				width="48"
+				height="48"
+			>
+				<path
+					d="M24 4 L40 22 H29 V44 H19 V22 H8 Z"
+					fill="currentColor"
+				/>
+			</svg>
+		</div>
 		<p class="intro">
-			Short links to my talks, videos and profiles. Pick one to see
-			where its clicks come from.
+			Every short link here forwards to somewhere else. Pick one to
+			see where its traffic comes from.
 		</p>
 	</header>
 
@@ -71,7 +86,13 @@
 				spellcheck="false"
 			/>
 		</label>
-		<div class="sort" role="group" aria-label="Sort links">
+		<div
+			class="sort"
+			class:by-name={sort === 'name'}
+			role="group"
+			aria-label="Sort links"
+		>
+			<span class="indicator" aria-hidden="true"></span>
 			<button
 				type="button"
 				aria-pressed={sort === 'clicks'}
@@ -117,28 +138,50 @@
 	.directory {
 		max-width: 46rem;
 		margin-inline: auto;
-		padding: clamp(2.5rem, 7vw, 5rem) 1rem 4rem;
+		padding: clamp(2rem, 6vw, 4.5rem) 1rem 4rem;
+	}
+
+	/* The page's one big sign, with the white inset border of the real thing. */
+	.sign {
+		position: relative;
+		padding: clamp(1.25rem, 4vw, 2rem) clamp(1.25rem, 4vw, 2.25rem);
+		padding-right: clamp(4.5rem, 12vw, 6.5rem);
+		border-radius: 1rem;
+		background: var(--sign);
+		color: var(--sign-ink);
+		box-shadow:
+			inset 0 0 0 0.45rem var(--sign),
+			inset 0 0 0 0.7rem var(--sign-ink);
 	}
 
 	h1 {
 		margin: 0;
-		font-variation-settings:
-			'CASL' 1,
-			'MONO' 0;
-		font-size: clamp(2.25rem, 8vw, 3.5rem);
+		font-size: clamp(2.5rem, 9vw, 4.25rem);
 		font-weight: 800;
 		line-height: 1;
-		letter-spacing: -0.02em;
+		letter-spacing: -0.01em;
+		overflow-wrap: anywhere;
 	}
 
-	.slash {
-		color: var(--cobalt);
+	.sign-sub {
+		margin: 0.6rem 0 0;
+		font-size: clamp(1.0625rem, 3vw, 1.375rem);
+		font-weight: 600;
+	}
+
+	.arrow {
+		position: absolute;
+		top: 50%;
+		right: clamp(1.25rem, 4vw, 2.25rem);
+		width: clamp(2.25rem, 7vw, 3.25rem);
+		height: auto;
+		transform: translateY(-50%);
 	}
 
 	.intro {
 		max-width: 34rem;
-		margin: 1rem 0 0;
-		color: var(--slate);
+		margin: 1.25rem 0 0;
+		color: var(--muted);
 		font-size: 1.0625rem;
 		line-height: 1.55;
 	}
@@ -147,7 +190,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.75rem;
-		margin: 2rem 0 1.25rem;
+		margin: 2rem 0 1rem;
 	}
 
 	.filter {
@@ -156,8 +199,8 @@
 
 	input {
 		width: 100%;
-		padding: 0.55rem 0.8rem;
-		border: 1px solid var(--rule);
+		padding: 0.6rem 0.85rem 0.45rem;
+		border: 2px solid var(--rule);
 		border-radius: 0.5rem;
 		background: transparent;
 		color: inherit;
@@ -165,27 +208,52 @@
 	}
 
 	input::placeholder {
-		color: var(--slate);
+		color: var(--muted);
 	}
 
+	/* Two equal halves, so the indicator slides exactly one half across. */
 	.sort {
-		display: inline-flex;
-		border: 1px solid var(--rule);
+		position: relative;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		padding: 0.25rem;
+		border: 2px solid var(--rule);
 		border-radius: 0.5rem;
-		padding: 0.2rem;
+		isolation: isolate;
+	}
+
+	.indicator {
+		position: absolute;
+		inset: 0.25rem auto 0.25rem 0.25rem;
+		width: calc(50% - 0.25rem);
+		border-radius: 0.3rem;
+		background: var(--signal);
+		z-index: -1;
+		transition: transform 380ms cubic-bezier(0.68, -0.35, 0.32, 1.35);
+	}
+
+	.by-name .indicator {
+		transform: translateX(100%);
 	}
 
 	.sort button {
-		padding: 0.35rem 0.8rem;
-		border-radius: 0.35rem;
-		color: var(--slate);
-		font-weight: 500;
+		padding: 0.4rem 0.9rem 0.3rem;
+		color: var(--muted);
+		font-weight: 650;
+		white-space: nowrap;
 		cursor: pointer;
+		transition: color 200ms;
 	}
 
 	.sort button[aria-pressed='true'] {
-		background: var(--ink);
-		color: var(--paper);
+		color: var(--signal-ink);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.indicator,
+		.sort button {
+			transition: none;
+		}
 	}
 
 	.links {
@@ -197,22 +265,22 @@
 
 	.empty {
 		margin: 0;
-		padding-block: 1rem;
+		padding: 1rem 0.75rem;
 		border-top: 1px solid var(--rule);
-		color: var(--slate);
+		color: var(--muted);
 	}
 
 	.note {
 		max-width: 34rem;
-		margin-top: 1.5rem;
-		color: var(--slate);
+		margin-top: 1.75rem;
+		color: var(--muted);
 		font-size: 0.875rem;
 		line-height: 1.5;
 	}
 
 	.note b {
 		color: var(--ink);
-		font-weight: 650;
+		font-weight: 700;
 	}
 
 	.visually-hidden {

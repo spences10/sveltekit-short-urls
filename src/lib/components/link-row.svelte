@@ -92,15 +92,13 @@
 		onclick={ontoggle}
 	>
 		<span class="names">
-			<span class="source"
-				><span class="slash">/</span>{link.source}</span
-			>
-			<span class="meta">
+			<span class="heading">
+				<span class="plate">/{link.source}</span>
 				{#if link.description}
 					<span class="description">{link.description}</span>
 				{/if}
-				<span class="where">{where(link.destination)}</span>
 			</span>
+			<span class="where">{where(link.destination)}</span>
 		</span>
 		<span
 			class="clicks"
@@ -135,7 +133,9 @@
 			transition:slide={{ duration, easing: cubicOut }}
 		>
 			<div class="actions">
-				<a class="open-link" href="/{link.source}">Open</a>
+				<a class="open-link" href="/{link.source}"
+					>Go to /{link.source}</a
+				>
 				<button type="button" class="copy" onclick={copy}>
 					{copied ? 'Copied' : `Copy ${host}/${link.source}`}
 				</button>
@@ -230,16 +230,24 @@
 		border-top: 1px solid var(--rule);
 	}
 
-	/* Tally: share of the most clicked link, along the row's foot. */
+	.open {
+		background: var(--ground-raised);
+	}
+
+	/* Lane line: a dashed tally of share against the busiest link. */
 	.link::after {
 		content: '';
 		position: absolute;
-		left: 0;
-		bottom: -1px;
-		height: 2px;
-		width: calc(var(--share) * 100%);
-		background: var(--cobalt);
-		opacity: 0.85;
+		left: 0.75rem;
+		bottom: 0.4rem;
+		height: 3px;
+		width: calc(var(--share) * (100% - 1.5rem));
+		background: repeating-linear-gradient(
+			90deg,
+			var(--lane) 0 1.25rem,
+			transparent 1.25rem 2rem
+		);
+		opacity: 0.55;
 	}
 
 	.summary {
@@ -248,74 +256,76 @@
 		align-items: center;
 		gap: 1rem;
 		width: 100%;
-		padding: 0.9rem 0.25rem;
+		padding: 1rem 0.75rem 1.4rem;
 		text-align: left;
 		color: inherit;
 		cursor: pointer;
 	}
 
-	.summary:hover .source,
-	.open .source {
-		color: var(--cobalt);
-	}
-
 	.names {
+		display: grid;
+		gap: 0.35rem;
 		min-width: 0;
 	}
 
-	.source {
-		display: block;
-		font-variation-settings:
-			'CASL' 1,
-			'MONO' 0;
-		font-size: 1.375rem;
+	.heading {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.35rem 0.75rem;
+	}
+
+	/* Route plate: sign green with the inset white border of a road sign. */
+	.plate {
+		padding: 0.3rem 0.65rem 0.15rem;
+		border-radius: 0.4rem;
+		background: var(--sign);
+		color: var(--sign-ink);
+		box-shadow:
+			inset 0 0 0 2px var(--sign),
+			inset 0 0 0 3.5px var(--sign-ink);
+		font-size: 1.125rem;
 		font-weight: 750;
 		line-height: 1.2;
-		letter-spacing: -0.01em;
-		transition: color 120ms;
-	}
-
-	.slash {
-		color: var(--cobalt);
-	}
-
-	.meta {
-		display: flex;
-		gap: 0.75rem;
-		margin-top: 0.1rem;
-		font-size: 0.9375rem;
-		color: var(--slate);
-		min-width: 0;
+		letter-spacing: 0.01em;
+		overflow-wrap: anywhere;
 	}
 
 	.description {
-		color: var(--ink);
-		flex-shrink: 0;
+		font-size: 1.0625rem;
+		font-weight: 600;
 	}
 
 	.where {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		font-size: 0.9375rem;
+		color: var(--muted);
 	}
 
 	.clicks {
 		font-variant-numeric: tabular-nums;
-		font-size: 1.0625rem;
-		font-weight: 600;
+		font-size: 1.125rem;
+		font-weight: 700;
 	}
 
 	.chevron {
-		color: var(--slate);
+		color: var(--muted);
 		transition: transform 200ms ease;
 	}
 
+	.summary:hover .chevron {
+		color: var(--ink);
+	}
+
 	.open .chevron {
+		color: var(--signal);
 		transform: rotate(180deg);
 	}
 
 	.detail {
-		padding: 0.25rem 0.25rem 1.5rem;
+		padding: 0.25rem 0.75rem 1.75rem;
 	}
 
 	.actions {
@@ -327,23 +337,29 @@
 
 	.open-link,
 	.copy {
-		padding: 0.35rem 0.8rem;
-		border: 1px solid var(--rule);
-		border-radius: 0.5rem;
-		font-size: 0.875rem;
-		color: var(--ink);
+		padding: 0.45rem 0.9rem 0.35rem;
+		border-radius: 0.4rem;
+		font-size: 0.9375rem;
+		font-weight: 650;
 		text-decoration: none;
 		cursor: pointer;
 	}
 
 	.open-link {
-		background: var(--ink);
-		border-color: var(--ink);
-		color: var(--paper);
+		background: var(--sign);
+		color: var(--sign-ink);
+		box-shadow:
+			inset 0 0 0 2px var(--sign),
+			inset 0 0 0 3.5px var(--sign-ink);
+	}
+
+	.copy {
+		border: 2px solid var(--rule);
+		color: var(--ink);
 	}
 
 	.copy:hover {
-		border-color: var(--slate);
+		border-color: var(--muted);
 	}
 
 	.destination {
@@ -352,25 +368,25 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		font-size: 0.875rem;
-		color: var(--slate);
+		color: var(--muted);
 	}
 
 	.panels {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-		gap: 1.5rem 2.5rem;
-		margin-top: 1.25rem;
+		gap: 1.75rem 2.5rem;
+		margin-top: 1.5rem;
 	}
 
 	h3 {
-		margin: 0 0 0.6rem;
-		font-size: 0.9375rem;
-		font-weight: 650;
+		margin: 0 0 0.75rem;
+		font-size: 1rem;
+		font-weight: 700;
 	}
 
 	.bars {
 		display: grid;
-		gap: 0.45rem;
+		gap: 0.6rem;
 		margin: 0;
 		padding: 0;
 		list-style: none;
@@ -380,7 +396,7 @@
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) auto;
 		gap: 0 0.75rem;
-		font-size: 0.875rem;
+		font-size: 0.9375rem;
 	}
 
 	.bar-name {
@@ -390,37 +406,40 @@
 	}
 
 	.bar-count {
-		color: var(--slate);
 		font-variant-numeric: tabular-nums;
+		font-weight: 650;
 	}
 
 	.bar {
 		grid-column: 1 / -1;
 		height: 4px;
-		margin-top: 0.2rem;
-		border-radius: 2px;
+		margin-top: 0.3rem;
 		width: calc(var(--width) * 100%);
-		background: var(--cobalt);
-		opacity: 0.55;
+		background: repeating-linear-gradient(
+			90deg,
+			var(--lane) 0 0.9rem,
+			transparent 0.9rem 1.4rem
+		);
+		opacity: 0.6;
 		transform-origin: left;
 	}
 
 	.figures {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.5rem 1.75rem;
+		gap: 0.5rem 2rem;
 		margin: 0;
 	}
 
 	.figures dt {
-		font-size: 0.8125rem;
-		color: var(--slate);
+		font-size: 0.875rem;
+		color: var(--muted);
 	}
 
 	.figures dd {
 		margin: 0;
-		font-size: 1.25rem;
-		font-weight: 650;
+		font-size: 1.5rem;
+		font-weight: 750;
 		font-variant-numeric: tabular-nums;
 	}
 
@@ -434,15 +453,15 @@
 
 	.split,
 	.more {
-		margin: 0.75rem 0 0;
-		font-size: 0.875rem;
-		color: var(--slate);
+		margin: 0.85rem 0 0;
+		font-size: 0.9375rem;
+		color: var(--muted);
 		line-height: 1.5;
 	}
 
 	.split b {
 		color: var(--ink);
-		font-weight: 600;
+		font-weight: 650;
 	}
 
 	.visually-hidden {
@@ -455,9 +474,12 @@
 	}
 
 	@media (max-width: 40rem) {
-		.meta {
-			flex-direction: column;
-			gap: 0;
+		.summary {
+			padding-inline: 0.25rem;
+		}
+
+		.detail {
+			padding-inline: 0.25rem;
 		}
 	}
 </style>

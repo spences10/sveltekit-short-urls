@@ -4,7 +4,7 @@
 		PUBLIC_FATHOM_URL,
 	} from '$app/env/public';
 	import { afterNavigate } from '$app/navigation';
-	import '@fontsource-variable/recursive/full.css';
+	import '@fontsource-variable/overpass';
 	import * as Fathom from 'fathom-client';
 	import { onMount, type Snippet } from 'svelte';
 	import '../app.css';

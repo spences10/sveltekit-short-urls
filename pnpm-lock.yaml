@@ -170,7 +170,7 @@ importers:
 
   .:
     devDependencies:
-      '@fontsource-variable/recursive':
+      '@fontsource-variable/overpass':
         specifier: ^5.3.0
         version: 5.3.0
       '@playwright/test':
@@ -279,8 +279,8 @@ packages:
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
     engines: {node: '>=18'}
 
-  '@fontsource-variable/recursive@5.3.0':
-    resolution: {integrity: sha512-4B4/lWCVeZgdbpJdIIU1sOVO/ECjjM673ohuxvyQ6uCK41TPlGzKRNokKY84noUgGYnpwc//MW4k2KrOMY19jQ==}
+  '@fontsource-variable/overpass@5.3.0':
+    resolution: {integrity: sha512-HviVvVvKCwhXjxM61GjnCW2cKoeEWFkoBANaArzIHliC+7mV4lmKKIBAa0O7E5ISHnkV3sihgOHXxzpnsbP3Xg==}
 
   '@jridgewell/gen-mapping@0.3.12':
     resolution: {integrity: sha512-OuLGC46TjB5BbN1dH8JULVVZY4WTdkF7tV9Ys6wLL1rubZnCMstOhNHueU5bLCrnRuDhKPDM4g6sw4Bel5Gzqg==}
@@ -1879,7 +1879,7 @@ snapshots:
   '@csstools/css-tokenizer@3.0.4':
     optional: true
 
-  '@fontsource-variable/recursive@5.3.0': {}
+  '@fontsource-variable/overpass@5.3.0': {}
 
   '@jridgewell/gen-mapping@0.3.12':
     dependencies:
