@@ -155,76 +155,59 @@
 				>
 			</div>
 
-			<div class="panels">
-				<section>
-					<h3>Where clicks came from</h3>
-					{#if detail && detail.referrers.length > 0}
-						<ol class="bars">
-							{#each detail.referrers as referrer, i (referrer.name)}
-								<li>
-									<span class="bar-name">{referrer.name}</span>
-									<span class="bar-count">
-										{number_crunch(referrer.clicks)}
-									</span>
-									<span
-										class="bar"
-										style:--width={referrer.clicks / top_referrer}
-										in:grow={{ delay: i * 40 }}
-									></span>
-								</li>
-							{/each}
-						</ol>
-						{#if detail.other_referrers > 0}
-							<p class="more">
-								Plus {number.format(detail.other_referrers)} from other
-								sites.
-							</p>
-						{/if}
-					{:else}
-						<p class="more">No referrers recorded yet.</p>
+			<section class="referrers">
+				<h3>Where clicks came from</h3>
+				{#if detail && detail.referrers.length > 0}
+					<ol class="bars">
+						{#each detail.referrers as referrer, i (referrer.name)}
+							<li>
+								<span class="bar-name">{referrer.name}</span>
+								<span class="bar-count">
+									{number_crunch(referrer.clicks)}
+								</span>
+								<span
+									class="bar"
+									style:--width={referrer.clicks / top_referrer}
+									in:grow={{ delay: i * 40 }}
+								></span>
+							</li>
+						{/each}
+					</ol>
+					{#if detail.other_referrers > 0}
+						<p class="more">
+							Plus {number.format(detail.other_referrers)} from other sites.
+						</p>
 					{/if}
-				</section>
-
-				{#if detail && detail.people + detail.bots > 0}
-					<section>
-						<h3>Since 27 October 2026</h3>
-						<dl class="figures">
-							<div>
-								<dt>People</dt>
-								<dd>{number.format(detail.people)}</dd>
-							</div>
-							<div>
-								<dt>Last 30 days</dt>
-								<dd>{number.format(detail.people_30_days)}</dd>
-							</div>
-							<div>
-								<dt>Bots and previews</dt>
-								<dd>{number.format(detail.bots)}</dd>
-							</div>
-						</dl>
-						{#if detail.countries.length > 0}
-							<ul class="split" aria-label="Countries">
-								{#each detail.countries as entry (entry.name)}
-									<li>
-										{country(entry.name)}
-										<b>{percent(entry, people_total)}</b>
-									</li>
-								{/each}
-							</ul>
-						{/if}
-						{#if detail.devices.length > 0}
-							<ul class="split" aria-label="Devices">
-								{#each detail.devices as entry (entry.name)}
-									<li>
-										{device(entry.name)}
-										<b>{percent(entry, people_total)}</b>
-									</li>
-								{/each}
-							</ul>
-						{/if}
-					</section>
+				{:else}
+					<p class="more">No referrers recorded yet.</p>
 				{/if}
-			</div>
+			</section>
+
+			{#if detail && detail.people > 0}
+				<ul class="split">
+					<li>
+						<b>{number.format(detail.people_30_days)}</b> people in the
+						last 30 days
+					</li>
+					{#if detail.bots > 0}
+						<li>
+							<b>{number.format(detail.bots)}</b> bots and previews
+						</li>
+					{/if}
+					{#each detail.countries as entry (entry.name)}
+						<li>
+							{country(entry.name)}
+							<b>{percent(entry, people_total)}</b>
+						</li>
+					{/each}
+					{#each detail.devices as entry (entry.name)}
+						<li>
+							{device(entry.name)}
+							<b>{percent(entry, people_total)}</b>
+						</li>
+					{/each}
+				</ul>
+			{/if}
 		</div>
 	{/if}
 </li>
@@ -376,10 +359,7 @@
 		color: var(--muted);
 	}
 
-	.panels {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-		gap: 1.75rem 2.5rem;
+	.referrers {
 		margin-top: 1.5rem;
 	}
 
@@ -427,25 +407,6 @@
 		);
 		opacity: 0.6;
 		transform-origin: left;
-	}
-
-	.figures {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem 2rem;
-		margin: 0;
-	}
-
-	.figures dt {
-		font-size: 0.875rem;
-		color: var(--muted);
-	}
-
-	.figures dd {
-		margin: 0;
-		font-size: 1.5rem;
-		font-weight: 750;
-		font-variant-numeric: tabular-nums;
 	}
 
 	.split {
