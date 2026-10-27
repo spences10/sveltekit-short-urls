@@ -133,9 +133,14 @@
 			transition:slide={{ duration, easing: cubicOut }}
 		>
 			<div class="actions">
-				<a class="open-link" href="/{link.source}"
-					>Go to /{link.source}</a
+				<a
+					class="open-link"
+					href="/{link.source}"
+					target="_blank"
+					rel="noopener"
 				>
+					Go to /{link.source}
+				</a>
 				<button type="button" class="copy" onclick={copy}>
 					{copied ? 'Copied' : `Copy ${host}/${link.source}`}
 				</button>
@@ -158,9 +163,9 @@
 							{#each detail.referrers as referrer, i (referrer.name)}
 								<li>
 									<span class="bar-name">{referrer.name}</span>
-									<span class="bar-count"
-										>{number_crunch(referrer.clicks)}</span
-									>
+									<span class="bar-count">
+										{number_crunch(referrer.clicks)}
+									</span>
 									<span
 										class="bar"
 										style:--width={referrer.clicks / top_referrer}
