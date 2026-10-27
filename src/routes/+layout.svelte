@@ -1,26 +1,26 @@
 <script lang="ts">
-	let { children } = $props();
-	import { browser } from '$app/env';
 	import {
 		PUBLIC_FATHOM_ID,
 		PUBLIC_FATHOM_URL,
 	} from '$app/env/public';
-	import { page } from '$app/state';
+	import { afterNavigate } from '$app/navigation';
 	import * as Fathom from 'fathom-client';
+	import { onMount, type Snippet } from 'svelte';
 	import '../app.css';
 
-	$effect(() => {
-		if (browser) {
-			Fathom.load(PUBLIC_FATHOM_ID, {
-				url: PUBLIC_FATHOM_URL,
-			});
-		}
+	let { children }: { children: Snippet } = $props();
+
+	onMount(() => {
+		Fathom.load(PUBLIC_FATHOM_ID, {
+			url: PUBLIC_FATHOM_URL,
+		});
 	});
 
 	// Track pageview on route change
-	$effect(() => {
-		void page.url.pathname;
-		if (browser) Fathom.trackPageview();
+	afterNavigate(({ shallow }) => {
+		if (shallow) return;
+
+		Fathom.trackPageview();
 	});
 </script>
 
