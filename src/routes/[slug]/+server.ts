@@ -1,4 +1,4 @@
-import { turso_client } from '$lib/server';
+import { turso_client } from '#lib/server/index.js';
 import type { RequestEvent } from './$types';
 
 export const GET = async ({ url, request }: RequestEvent) => {
@@ -44,10 +44,12 @@ export const GET = async ({ url, request }: RequestEvent) => {
 			});
 		}
 
+		const location = destination[0].destination;
+
 		return new Response(undefined, {
 			status: 302,
 			headers: {
-				Location: String(destination[0].destination) ?? '/',
+				Location: typeof location === 'string' ? location : '/',
 			},
 		});
 	} else if (url.pathname.length > 1) {

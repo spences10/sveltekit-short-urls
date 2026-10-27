@@ -1,4 +1,4 @@
-import { turso_client } from '$lib/server';
+import { turso_client } from '#lib/server/index.js';
 
 export const load = async () => {
 	const client = turso_client();

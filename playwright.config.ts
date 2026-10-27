@@ -1,10 +1,13 @@
 import { defineConfig } from '@playwright/test';
+import { env } from 'node:process';
+
+const port = Number(env.PLAYWRIGHT_PORT ?? 4173);
 
 export default defineConfig({
 	webServer: {
-		command: 'pnpm run build && pnpm run preview',
-		port: 4173,
+		command: `pnpm run build && pnpm run preview --port ${port}`,
+		port,
 	},
 
-	testDir: 'e2e',
+	testMatch: '**/*.e2e.{ts,js}',
 });

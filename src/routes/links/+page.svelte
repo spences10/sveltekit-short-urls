@@ -1,6 +1,6 @@
 <script lang="ts">
 	let { data } = $props();
-	let { records } = data;
+	let records = $derived(data.records);
 	let sort_order: 'asc' | 'desc' = $state('desc');
 
 	const toggle_sort_order = () => {
@@ -58,7 +58,7 @@
 		{#each sorted_records as record}
 			{#if record && record.description && record.source && record.destination && record.visible}
 				<li
-					class="prose prose-xl border-primary bg-secondary/10 my-4 rounded-md border p-4"
+					class="my-4 prose prose-xl rounded-md border border-primary bg-secondary/10 p-4"
 				>
 					<p>Description: {record.description}</p>
 					<p>Clicks: {record.clicks}</p>

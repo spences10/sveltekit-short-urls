@@ -1,4 +1,4 @@
-import { dev } from '$app/environment';
+import { dev } from '$app/env';
 import { createClient, type Client } from '@libsql/client';
 
 const LOCAL_DB_PATH = dev

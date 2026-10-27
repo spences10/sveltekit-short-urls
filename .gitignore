@@ -1,4 +1,6 @@
 test-results
+playwright-report
+coverage
 node_modules
 
 # Output
@@ -22,6 +24,7 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+.vitest
+
 # Database files
 local-dev-replica.db*
-local-dev-replica.db-*

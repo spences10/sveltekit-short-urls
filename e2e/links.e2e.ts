@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 // Test: Check sorting toggle button is visible
 test('should display sorting toggle button', async ({ page }) => {
-	await page.goto('http://localhost:4173/links');
+	await page.goto('/links');
 	const sortButton = await page.$('button');
 	expect(await sortButton?.isVisible()).toBe(true);
 });
@@ -11,16 +11,16 @@ test('should display sorting toggle button', async ({ page }) => {
 test('should display records sorted by clicks in descending order initially', async ({
 	page,
 }) => {
-	await page.goto('http://localhost:4173/links');
+	await page.goto('/links');
 	const clicksElements = await page.$$eval(
 		'ul li p:nth-child(2)',
 		(elements) =>
 			elements.map((e) =>
-				parseInt(e.textContent?.split(': ')[1] || '0')
-			)
+				parseInt(e.textContent?.split(': ')[1] || '0'),
+			),
 	);
 	const isDescending = clicksElements.every(
-		(val, i, arr) => !i || arr[i - 1] >= val
+		(val, i, arr) => !i || arr[i - 1] >= val,
 	);
 	expect(isDescending).toBe(true);
 });
@@ -30,7 +30,7 @@ test('should display records sorted by clicks in descending order initially', as
 test('should display records sorted by clicks in ascending order when toggled', async ({
 	page,
 }) => {
-	await page.goto('http://localhost:4173/links');
+	await page.goto('/links');
 	// Simulate a click on the sorting toggle button (assuming it's the first button on the page)
 	await page.click('button');
 
@@ -41,11 +41,11 @@ test('should display records sorted by clicks in ascending order when toggled', 
 		'ul li p:nth-child(2)',
 		(elements) =>
 			elements.map((e) =>
-				parseInt(e.textContent?.split(': ')[1] || '0')
-			)
+				parseInt(e.textContent?.split(': ')[1] || '0'),
+			),
 	);
 	const isAscending = clicksElements.every(
-		(val, i, arr) => !i || arr[i - 1] <= val
+		(val, i, arr) => !i || arr[i - 1] <= val,
 	);
 	expect(isAscending).toBe(true);
 });
