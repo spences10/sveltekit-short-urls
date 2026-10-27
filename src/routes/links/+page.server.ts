@@ -1,12 +1,11 @@
-import { get_db, type Link } from '#lib/server/index.js';
+import { get_db, links_store } from '#lib/server/index.js';
+import type { PageServerLoad } from './$types';
 
-export const load = async () => {
+export const load: PageServerLoad = () => {
 	try {
-		const records = get_db()
-			.prepare(`SELECT * FROM links WHERE visible = 1`)
-			.all() as unknown as Link[];
-
-		return { records };
+		return {
+			records: links_store(get_db()).list_visible_with_clicks(),
+		};
 	} catch (error) {
 		console.error(error);
 		return {

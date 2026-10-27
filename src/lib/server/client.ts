@@ -1,22 +1,10 @@
-import { dev } from '$app/env';
 import { DATABASE_PATH } from '$app/env/private';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
+import schema from './schema.sql?raw';
 
-const db_path =
-	DATABASE_PATH ??
-	(dev ? './local-dev-replica.db' : '/app/data/turso-replica.db');
-
-export interface Link {
-	id: number;
-	source: string;
-	destination: string;
-	position: number | null;
-	description: string | null;
-	clicks: number;
-	visible: number;
-}
+const db_path = DATABASE_PATH ?? './data/short-urls.db';
 
 let db: DatabaseSync | undefined;
 
@@ -28,6 +16,7 @@ export const get_db = (): DatabaseSync => {
 	}
 
 	db = new DatabaseSync(db_path);
+	db.exec('PRAGMA foreign_keys = ON');
 	db.exec('PRAGMA busy_timeout = 5000');
 
 	if (db_path !== ':memory:') {
@@ -35,26 +24,7 @@ export const get_db = (): DatabaseSync => {
 		db.exec('PRAGMA synchronous = NORMAL');
 	}
 
-	db.exec(`
-		CREATE TABLE IF NOT EXISTS links (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			source TEXT,
-			destination TEXT,
-			position INTEGER,
-			description TEXT,
-			clicks INTEGER,
-			visible BOOLEAN
-		);
-
-		CREATE TABLE IF NOT EXISTS referrers (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			link_id INTEGER,
-			referrer TEXT,
-			count INTEGER DEFAULT 1,
-			FOREIGN KEY (link_id) REFERENCES links (id),
-			UNIQUE (link_id, referrer)
-		);
-	`);
+	db.exec(schema);
 
 	return db;
 };

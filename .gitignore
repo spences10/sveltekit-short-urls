@@ -26,5 +26,4 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vitest
 
-# Database files
-local-dev-replica.db*
+data
