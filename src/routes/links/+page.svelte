@@ -1,4 +1,5 @@
 <script lang="ts">
+	import LinkRow from '#lib/components/link-row.svelte';
 	import { number_crunch } from '#lib/number-crunch.js';
 	import { page } from '$app/state';
 
@@ -8,8 +9,7 @@
 
 	let sort: Sort = $state('clicks');
 	let query = $state('');
-	let copied: string | null = $state(null);
-	let copied_timer: ReturnType<typeof setTimeout> | undefined;
+	let open_id: number | null = $state(null);
 
 	const number = new Intl.NumberFormat('en-GB');
 
@@ -38,23 +38,8 @@
 		);
 	});
 
-	const where = (destination: string) => {
-		try {
-			const url = new URL(destination);
-			const path = url.pathname === '/' ? '' : url.pathname;
-			return `${url.host.replace(/^www\./, '')}${path}`;
-		} catch {
-			return destination;
-		}
-	};
-
-	const copy = async (source: string) => {
-		await navigator.clipboard.writeText(
-			`${page.url.origin}/${source}`,
-		);
-		copied = source;
-		clearTimeout(copied_timer);
-		copied_timer = setTimeout(() => (copied = null), 1600);
+	const toggle = (id: number) => {
+		open_id = open_id === id ? null : id;
 	};
 </script>
 
@@ -67,173 +52,106 @@
 </svelte:head>
 
 <main class="directory">
-	<header class="row masthead">
-		<h1 class="domain">{page.url.hostname}</h1>
-		<span class="axis" aria-hidden="true">/</span>
+	<header>
+		<h1>{page.url.hostname}<span class="slash">/</span></h1>
+		<p class="intro">
+			Short links to my talks, videos and profiles. Pick one to see
+			where its clicks come from.
+		</p>
 	</header>
 
-	<div class="row controls">
-		<p class="intro">
-			Short links to my talks, videos and profiles. Add a path to the
-			domain, or pick one here.
-		</p>
-		<div class="tools">
-			<label class="filter">
-				<span class="visually-hidden">Filter links</span>
-				<input
-					type="search"
-					placeholder="Filter links"
-					bind:value={query}
-					autocomplete="off"
-					spellcheck="false"
-				/>
-			</label>
-			<div class="sort" role="group" aria-label="Sort links">
-				<button
-					type="button"
-					aria-pressed={sort === 'clicks'}
-					onclick={() => (sort = 'clicks')}>Most clicked</button
-				>
-				<button
-					type="button"
-					aria-pressed={sort === 'name'}
-					onclick={() => (sort = 'name')}>A to Z</button
-				>
-			</div>
+	<div class="tools">
+		<label class="filter">
+			<span class="visually-hidden">Filter links</span>
+			<input
+				type="search"
+				placeholder="Filter links"
+				bind:value={query}
+				autocomplete="off"
+				spellcheck="false"
+			/>
+		</label>
+		<div class="sort" role="group" aria-label="Sort links">
+			<button
+				type="button"
+				aria-pressed={sort === 'clicks'}
+				onclick={() => (sort = 'clicks')}>Most clicked</button
+			>
+			<button
+				type="button"
+				aria-pressed={sort === 'name'}
+				onclick={() => (sort = 'name')}>A to Z</button
+			>
 		</div>
 	</div>
 
 	{#if shown.length > 0}
 		<ul class="links">
 			{#each shown as record (record.id)}
-				<li
-					class="row link"
-					style:--share={record.clicks / most_clicks}
-				>
-					<span
-						class="clicks"
-						data-clicks={record.clicks}
-						title="{number.format(record.clicks)} clicks"
-					>
-						{number_crunch(record.clicks)}
-						<span class="visually-hidden">clicks</span>
-					</span>
-					<div class="body">
-						<a class="source" href="/{record.source}">
-							<span aria-hidden="true">/</span>{record.source}
-						</a>
-						<p class="detail">
-							{#if record.description}
-								<span class="description">{record.description}</span>
-							{/if}
-							<span class="where">{where(record.destination)}</span>
-						</p>
-					</div>
-					<button
-						type="button"
-						class="copy"
-						onclick={() => copy(record.source)}
-						aria-label="Copy {page.url.hostname}/{record.source}"
-					>
-						{copied === record.source ? 'Copied' : 'Copy'}
-					</button>
-				</li>
+				<LinkRow
+					link={record}
+					open={open_id === record.id}
+					share={record.clicks / most_clicks}
+					host={page.url.hostname}
+					origin={page.url.origin}
+					ontoggle={() => toggle(record.id)}
+				/>
 			{/each}
 		</ul>
 	{:else if records.length > 0}
-		<p class="row empty">
-			<span></span>
-			<span>No links match “{query.trim()}”.</span>
-		</p>
+		<p class="empty">No links match “{query.trim()}”.</p>
 	{:else}
-		<p class="row empty">
-			<span></span>
-			<span>No links yet. Add one with the ingest API.</span>
-		</p>
+		<p class="empty">No links yet. Add one with the ingest API.</p>
 	{/if}
 
-	<footer class="row note">
-		<span class="clicks" title="{number.format(total_clicks)} clicks">
-			{number_crunch(total_clicks)}
-		</span>
-		<p>
-			clicks on these links. Counts before 27 October 2026 include
-			bots and link previews; since then only people are counted.
-		</p>
+	<footer class="note">
+		<b title="{number.format(total_clicks)} clicks"
+			>{number_crunch(total_clicks)}</b
+		>
+		clicks on these links. Counts before 27 October 2026 include bots and
+		link previews; since then only people are counted.
 	</footer>
-
-	<p class="visually-hidden" aria-live="polite">
-		{copied ? `Copied ${page.url.hostname}/${copied}` : ''}
-	</p>
 </main>
 
 <style>
 	.directory {
-		--gap: clamp(1rem, 3vw, 2rem);
-		display: grid;
-		grid-template-columns: max-content minmax(0, 1fr) max-content;
-		column-gap: var(--gap);
-		max-width: 64rem;
+		max-width: 46rem;
 		margin-inline: auto;
-		padding: clamp(2.5rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem) 4rem;
+		padding: clamp(2.5rem, 7vw, 5rem) 1rem 4rem;
 	}
 
-	.row {
-		display: grid;
-		grid-column: 1 / -1;
-		grid-template-columns: subgrid;
-	}
-
-	.masthead {
-		align-items: baseline;
+	h1 {
+		margin: 0;
 		font-variation-settings:
 			'CASL' 1,
 			'MONO' 0;
-		font-size: clamp(2.25rem, 7vw, 4.5rem);
+		font-size: clamp(2.25rem, 8vw, 3.5rem);
 		font-weight: 800;
 		line-height: 1;
 		letter-spacing: -0.02em;
 	}
 
-	.domain {
-		grid-column: 1;
-		justify-self: end;
-		font: inherit;
-		margin: 0;
-	}
-
-	/* The slash is the axis every source hangs from. */
-	.axis {
-		grid-column: 2;
-		margin-left: calc(var(--gap) * -1);
+	.slash {
 		color: var(--cobalt);
 	}
 
-	.controls {
-		margin-top: 1.5rem;
-		margin-bottom: 2.5rem;
-	}
-
 	.intro {
-		grid-column: 2 / -1;
-		max-width: 36rem;
-		margin: 0;
+		max-width: 34rem;
+		margin: 1rem 0 0;
 		color: var(--slate);
 		font-size: 1.0625rem;
 		line-height: 1.55;
 	}
 
 	.tools {
-		grid-column: 2 / -1;
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.75rem;
-		margin-top: 1.25rem;
+		margin: 2rem 0 1.25rem;
 	}
 
 	.filter {
 		flex: 1 1 14rem;
-		max-width: 22rem;
 	}
 
 	input {
@@ -271,103 +189,10 @@
 	}
 
 	.links {
-		display: grid;
-		grid-column: 1 / -1;
-		grid-template-columns: subgrid;
 		margin: 0;
 		padding: 0;
 		list-style: none;
-	}
-
-	.link {
-		position: relative;
-		align-items: center;
-		padding-block: 0.85rem;
-		border-top: 1px solid var(--rule);
-	}
-
-	/* Tally: runs from the axis, sized by share of the top link. */
-	.link::before {
-		content: '';
-		position: absolute;
-		bottom: -1px;
-		left: 0;
-		height: 3px;
-		width: calc(var(--share) * 100%);
-		background: var(--cobalt);
-		grid-column: 2 / -1;
-	}
-
-	.clicks {
-		grid-column: 1;
-		justify-self: end;
-		color: var(--slate);
-		font-variant-numeric: tabular-nums;
-		font-size: 0.9375rem;
-	}
-
-	.body {
-		grid-column: 2;
-		min-width: 0;
-	}
-
-	.source {
-		display: inline-block;
-		color: var(--ink);
-		font-variation-settings:
-			'CASL' 1,
-			'MONO' 0;
-		font-size: clamp(1.375rem, 3vw, 1.75rem);
-		font-weight: 750;
-		line-height: 1.15;
-		letter-spacing: -0.01em;
-		text-decoration: none;
-		margin-left: -0.55em;
-	}
-
-	.source span {
-		color: var(--cobalt);
-	}
-
-	.source:hover {
-		color: var(--cobalt);
-	}
-
-	.detail {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0 0.75rem;
-		margin: 0.2rem 0 0;
-		font-size: 0.9375rem;
-		color: var(--slate);
-	}
-
-	.description {
-		color: var(--ink);
-	}
-
-	.where {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		max-width: 100%;
-	}
-
-	.copy {
-		grid-column: 3;
-		padding: 0.35rem 0.75rem;
-		border: 1px solid var(--rule);
-		border-radius: 0.5rem;
-		background: var(--paper);
-		color: var(--slate);
-		font-size: 0.875rem;
-		cursor: pointer;
-		min-width: 5.5rem;
-	}
-
-	.copy:hover {
-		color: var(--ink);
-		border-color: var(--slate);
+		border-bottom: 1px solid var(--rule);
 	}
 
 	.empty {
@@ -377,29 +202,17 @@
 		color: var(--slate);
 	}
 
-	.empty span:last-child {
-		grid-column: 2 / -1;
-	}
-
 	.note {
-		align-items: baseline;
-		margin-top: 0;
-		padding-top: 1.25rem;
-		border-top: 1px solid var(--rule);
+		max-width: 34rem;
+		margin-top: 1.5rem;
 		color: var(--slate);
 		font-size: 0.875rem;
+		line-height: 1.5;
 	}
 
-	.note .clicks {
+	.note b {
 		color: var(--ink);
 		font-weight: 650;
-	}
-
-	.note p {
-		grid-column: 2 / -1;
-		max-width: 36rem;
-		margin: 0;
-		line-height: 1.5;
 	}
 
 	.visually-hidden {
@@ -409,72 +222,5 @@
 		overflow: hidden;
 		clip-path: inset(50%);
 		white-space: nowrap;
-	}
-
-	@media (max-width: 40rem) {
-		.directory {
-			grid-template-columns: minmax(0, 1fr) max-content;
-		}
-
-		.masthead {
-			display: flex;
-			font-size: clamp(2rem, 11vw, 2.75rem);
-		}
-
-		.axis {
-			margin: 0;
-		}
-
-		.link::before {
-			grid-column: 1 / -1;
-		}
-
-		.intro,
-		.tools,
-		.note p,
-		.empty span:last-child {
-			grid-column: 1 / -1;
-		}
-
-		.link {
-			grid-template-areas:
-				'body copy'
-				'clicks copy';
-		}
-
-		.body {
-			grid-area: body;
-		}
-
-		.clicks {
-			grid-area: clicks;
-			justify-self: start;
-			margin-top: 0.15rem;
-			font-size: 0.875rem;
-		}
-
-		.copy {
-			grid-area: copy;
-		}
-
-		.source {
-			margin-left: 0;
-		}
-
-		.note {
-			display: block;
-		}
-
-		.note .clicks {
-			display: inline;
-		}
-
-		.note p {
-			display: inline;
-		}
-
-		.empty span:first-child {
-			display: none;
-		}
 	}
 </style>
