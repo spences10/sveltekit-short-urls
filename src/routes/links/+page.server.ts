@@ -1,13 +1,10 @@
-import { turso_client } from '#lib/server/index.js';
+import { get_db, type Link } from '#lib/server/index.js';
 
 export const load = async () => {
-	const client = turso_client();
-
 	try {
-		// Fetch all records from the SQLite database
-		const { rows: records } = await client.execute(`
-      SELECT * FROM links WHERE visible = 1
-    `);
+		const records = get_db()
+			.prepare(`SELECT * FROM links WHERE visible = 1`)
+			.all() as unknown as Link[];
 
 		return { records };
 	} catch (error) {

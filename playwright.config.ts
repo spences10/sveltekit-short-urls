@@ -7,6 +7,7 @@ export default defineConfig({
 	webServer: {
 		command: `pnpm run build && pnpm run preview --port ${port}`,
 		port,
+		env: { DATABASE_PATH: ':memory:' },
 	},
 
 	testMatch: '**/*.e2e.{ts,js}',

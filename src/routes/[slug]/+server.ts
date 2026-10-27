@@ -1,8 +1,8 @@
-import { turso_client } from '#lib/server/index.js';
+import { get_db, type Link } from '#lib/server/index.js';
 import type { RequestEvent } from './$types';
 
 export const GET = async ({ url, request }: RequestEvent) => {
-	const client = turso_client();
+	const db = get_db();
 	const key = url.pathname.startsWith('/')
 		? url.pathname.substring(1)
 		: url.pathname;
@@ -10,46 +10,42 @@ export const GET = async ({ url, request }: RequestEvent) => {
 	const referrer = request.headers.get('referer') || 'direct';
 
 	// Fetch the destination URL and id from the database
-	const { rows: destination } = await client.execute({
-		sql: `SELECT id, destination FROM links WHERE source = ?`,
-		args: [key],
-	});
+	const link = db
+		.prepare(`SELECT id, destination FROM links WHERE source = ?`)
+		.get(key) as Pick<Link, 'id' | 'destination'> | undefined;
 
-	if (destination.length > 0) {
-		const link_id = destination[0].id;
-
+	if (link) {
 		// Increment clicks for the matched record
-		await client.execute({
-			sql: `UPDATE links SET clicks = clicks + 1 WHERE source = ?`,
-			args: [key],
-		});
+		db.prepare(
+			`UPDATE links SET clicks = clicks + 1 WHERE source = ?`,
+		).run(key);
 
 		// Check if the referrer already exists for this link
-		const { rows: referrer_rows } = await client.execute({
-			sql: `SELECT count FROM referrers WHERE link_id = ? AND referrer = ?`,
-			args: [link_id, referrer],
-		});
+		const existing_referrer = db
+			.prepare(
+				`SELECT count FROM referrers WHERE link_id = ? AND referrer = ?`,
+			)
+			.get(link.id, referrer);
 
-		if (referrer_rows.length > 0) {
+		if (existing_referrer) {
 			// Increment the count for the existing referrer
-			await client.execute({
-				sql: `UPDATE referrers SET count = count + 1 WHERE link_id = ? AND referrer = ?`,
-				args: [link_id, referrer],
-			});
+			db.prepare(
+				`UPDATE referrers SET count = count + 1 WHERE link_id = ? AND referrer = ?`,
+			).run(link.id, referrer);
 		} else {
 			// Insert a new record for the referrer
-			await client.execute({
-				sql: `INSERT INTO referrers (link_id, referrer, count) VALUES (?, ?, 1)`,
-				args: [link_id, referrer],
-			});
+			db.prepare(
+				`INSERT INTO referrers (link_id, referrer, count) VALUES (?, ?, 1)`,
+			).run(link.id, referrer);
 		}
-
-		const location = destination[0].destination;
 
 		return new Response(undefined, {
 			status: 302,
 			headers: {
-				Location: typeof location === 'string' ? location : '/',
+				Location:
+					typeof link.destination === 'string'
+						? link.destination
+						: '/',
 			},
 		});
 	} else if (url.pathname.length > 1) {

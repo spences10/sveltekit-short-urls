@@ -1,7 +1,8 @@
 # SvelteKit Short URLs
 
-A modern URL shortener built with SvelteKit and Turso (libSQL).
-Features link management, click tracking, and referrer analytics.
+A modern URL shortener built with SvelteKit and SQLite
+(`node:sqlite`). Features link management, click tracking, and
+referrer analytics.
 
 ## Features
 
@@ -14,7 +15,8 @@ Features link management, click tracking, and referrer analytics.
 
 ## Database Schema
 
-The application uses Turso (libSQL) with two main tables:
+The application uses SQLite (`node:sqlite`) with two main tables.
+Tables are created on first use if they don't exist.
 
 ### Links Table
 
@@ -33,13 +35,12 @@ The application uses Turso (libSQL) with two main tables:
 
 ## Setup
 
-1. Create a Turso database and obtain credentials
-2. Set environment variables:
-   ```bash
-   TURSO_DB_URL=your_database_url
-   TURSO_DB_AUTH_TOKEN=your_auth_token
-   TURSO_SYNC_URL=your_sync_url  # Optional
-   ```
+The database file defaults to `./local-dev-replica.db` in dev and
+`/app/data/turso-replica.db` in production. Override it with:
+
+```bash
+DATABASE_PATH=/path/to/links.db
+```
 
 ## Database Operations
 
